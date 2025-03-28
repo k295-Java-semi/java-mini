@@ -2,13 +2,34 @@ package model.dao;
 
 
 import model.dto.User;
+import pension.exception.DMLException;
+import pension.exception.NotFoundException;
 
 public interface UserDao {
-    void insertUser(User user) throws Exception;
-    User selectUserByEmail(String email) throws Exception;
-    User selectUserById(int userId) throws Exception; // 추가
-    void updateUser(User user) throws Exception; // 추가
-    void deleteUser(int userId) throws Exception; // 추가
-    boolean existsByEmail(String email) throws Exception; // 추가
-    void updatePassword(int userId, String newPassword) throws Exception; // 추가
+	
+	/**
+	 * 회원가입
+	 */
+	int newRegister(User user) throws DMLException;
+	
+	/**
+	 * 로그인
+	 */
+	
+	
+	/**
+	 * 회원 정보 수정
+	 */
+	int updateUser(User user) throws DMLException;
+	
+	/**
+	 * 회원 탈퇴
+	 */
+	int deleteUser(int userId) throws DMLException;
+	
+	/**
+	 * 권한 확인
+	 * role : guest(0), admin(1)
+	 */
+	boolean roleCheck(int userId) throws NotFoundException;
 }

@@ -16,4 +16,8 @@ public class SuccessView {
 	public static void messagePrint(String message) {
 		System.out.println(message);
 	}
+	
+	public static void selectByNoPrint(Room room) {
+		System.out.println(room);
+	}
 }

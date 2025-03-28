@@ -10,11 +10,13 @@ import java.util.List;
 import model.dto.Room;
 import pension.exception.DMLException;
 import pension.exception.NotFoundException;
+import pension.exception.SearchWrongException;
 import util.DBManager;
 
 public class RoomDaoImpl implements RoomDao{
 	
 	private static RoomDao instance = new RoomDaoImpl();
+	private UserDao userDao = UserDaoImpl.getInstance();
 	
 	private RoomDaoImpl() {}
 	
@@ -53,6 +55,39 @@ public class RoomDaoImpl implements RoomDao{
 		}
 		return list;
 	}
+	
+	/**
+	 * 특정 방 정보 메서드
+	 * Query : select * from room where room_id = ?
+	 */
+	@Override
+	public Room roomSelectByNo(int roomId) throws SearchWrongException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Room room = null;
+		String sql = "select * form room where room_id = ?";
+		
+		try {
+			con = DBManager.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, roomId);
+			
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				room = new Room(roomId, rs.getString(1), rs.getString(2), 
+						rs.getInt(3), rs.getInt(4), rs.getString(5), rs.getString(6));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new SearchWrongException("검색 결과가 없습니다.");
+		} finally {
+			DBManager.close(con, ps, rs);
+		}
+		
+		return room;
+	}
+	
 
 	/**
 	 * 새로운 방 추가하는 메서드 (create)
@@ -60,14 +95,20 @@ public class RoomDaoImpl implements RoomDao{
 	 * values(?,?,?,?,?,?)
 	 **/
 	@Override
-	public int addRoom(Room room) throws DMLException {
+	public int addRoom(Room room, int userId) throws DMLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int result = 0;
-		String sql = "insert into room (room_number, type, price, capacity, size, description)\r\n"
-				+ "	 * values(?,?,?,?,?,?)";
 		
 		try {
+			boolean isAdmin = userDao.roleCheck(userId);
+			
+			if (!isAdmin) {
+				throw new DMLException("관리자 권한이 아닙니다.");
+			}
+			String sql = "insert into room (room_number, type, price, capacity, size, description)\r\n"
+				+ "	 * values(?,?,?,?,?,?)";
+		
 			con = DBManager.getConnection();
 			ps = con.prepareStatement(sql);
 			ps.setString(1, room.getRoomNumber());
@@ -79,6 +120,10 @@ public class RoomDaoImpl implements RoomDao{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DMLException("형식 오류");
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+			throw new DMLException("사용자를 찾을 수 없습니다.");
+
 		} finally {
 			DBManager.close(con, ps, null);
 		}
@@ -90,14 +135,17 @@ public class RoomDaoImpl implements RoomDao{
 	 * Query : update room set room_number = ?, type = ?, price = ?, capacity = ?, size = ?, description = ? where roomId = ?
 	 **/
 	@Override
-	public int updateRoom(Room room) throws DMLException {
+	public int updateRoom(Room room, int userId) throws DMLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int result = 0;
+		try {
+			boolean isAdmin = userDao.roleCheck(userId);
+			if (!isAdmin) throw new DMLException("권한이 없습니다.");
+		
 		String sql = "update room set "
 				+ "room_number = ?, type = ?, price = ?, capacity = ?, size = ?, description = ? where room_id = ?";
 		
-		try {
 			con = DBManager.getConnection();
 			ps = con.prepareStatement(sql);
 			
@@ -114,9 +162,12 @@ public class RoomDaoImpl implements RoomDao{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DMLException("");
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+			throw new DMLException("");
 		} finally {
 			DBManager.close(con, ps, null);
-		}
+		} 
 		return result;
 	}
 
@@ -125,13 +176,17 @@ public class RoomDaoImpl implements RoomDao{
 	 * Query : delete from room where room_id = ?
 	 **/
 	@Override
-	public int deleteRoom(int roomId) throws DMLException {
+	public int deleteRoom(int roomId, int userId) throws DMLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int result = 0;
-		String sql = "delete from room where room_id = ?";
 		
 		try {
+			boolean isAdmin = userDao.roleCheck(userId);
+			if (!isAdmin) throw new NotFoundException("권한이 없습니다.");
+			
+			String sql = "delete from room where room_id = ?";
+		
 			con = DBManager.getConnection();
 			ps = con.prepareStatement(sql);
 			
@@ -142,6 +197,9 @@ public class RoomDaoImpl implements RoomDao{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DMLException("");
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+			throw new DMLException("사용자를 찾을 수 없습니다.");
 		} finally {
 			DBManager.close(con, ps, null);
 		}

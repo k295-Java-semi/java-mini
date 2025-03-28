@@ -4,6 +4,8 @@ package model.service;
 import model.dto.Room;
 import pension.exception.DMLException;
 import pension.exception.NotFoundException;
+import pension.exception.SearchWrongException;
+
 import java.util.List;
 
 public interface RoomService {
@@ -16,20 +18,20 @@ public interface RoomService {
     /**
 	 * 특정 방 조회
 	 */
-//	Room getRoom(int roomNo) throws FindException;
+	Room getRoom(int roomId) throws SearchWrongException;
 
 	/**
 	 * 방 추가
 	 */
-    void addRoom(Room room) throws DMLException;
+    void addRoom(Room room, int userId) throws DMLException;
 
     /**
 	 * 방 수정
 	 */
-	void modifyRoom(Room room) throws DMLException;
+	void modifyRoom(Room room, int userId) throws DMLException;
 
 	/**
 	 * 방 삭제
 	 */
-	void removeRoom(int roomId) throws DMLException;
+	void removeRoom(int roomId, int userId) throws DMLException;
 }
