@@ -57,6 +57,18 @@ public class RoomDaoImpl implements RoomDao{
 	}
 	
 	/**
+	 * 예약 가능한 방만 보여주는 메서드
+	 */
+	@Override
+	public List<Room> isavaibleRooms() throws NotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
+	
+	/**
 	 * 특정 방 정보 메서드
 	 * Query : select * from room where room_id = ?
 	 */
@@ -114,6 +126,9 @@ public class RoomDaoImpl implements RoomDao{
 			ps.setString(1, room.getRoomNumber());
 			ps.setString(2, room.getType());
 			ps.setInt(3, room.getPrice());
+			ps.setInt(4, room.getCapacity());
+			ps.setString(5, room.getSize());
+			ps.setString(6, room.getDescription());
 			
 			result = ps.executeUpdate();
 			
