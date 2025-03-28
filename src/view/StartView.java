@@ -6,5 +6,6 @@ public class StartView {
         // MenuView.menu();
         System.out.println("branch 설정 추가");
         System.out.println("-----------");
+        System.out.println("하이");
     }
 }
