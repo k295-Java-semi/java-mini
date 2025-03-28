@@ -4,12 +4,12 @@ public class Room {
     private int roomId;
     private String roomNumber;
     private String type;
-    private double price;
+    private int price;
     private int capacity;
     private String size;
     private String description;
 
-    public Room(int roomId, String roomNumber, String type, double price, int capacity, String size, String description) {
+    public Room(int roomId, String roomNumber, String type, int price, int capacity, String size, String description) {
         this.roomId = roomId;
         this.roomNumber = roomNumber;
         this.type = type;
@@ -35,11 +35,11 @@ public class Room {
         this.type = type;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
