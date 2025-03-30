@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.dto.Room;
@@ -8,22 +9,30 @@ import model.service.RoomServiceImpl;
 import pension.exception.DMLException;
 import pension.exception.NotFoundException;
 import pension.exception.SearchWrongException;
+import session.Session;
 import view.FailView;
 import view.SuccessView;
 
 public class RoomController {
-	
+	private static RoomController instance;
 	private static RoomService roomService = RoomServiceImpl.getInstance();
+	
+	public static RoomController getInstance() {
+		if (instance == null) {
+			instance = new RoomController();
+		}
+		return instance;
+	}
 	
 	/**
 	 * 모든 방 정보 조회
 	 **/
-	public static void getAllRooms() {
+	public List<Room> getAllRooms() {
 		try {
-			List<Room> list = roomService.getAllRooms();
-			SuccessView.selectPrint(list);
+			return roomService.getAllRooms();
 		} catch (NotFoundException e) {
 			FailView.errorMessage(e.getMessage());
+			return new ArrayList<Room>();
 		}
 	}
 	
@@ -40,11 +49,23 @@ public class RoomController {
 	}
 	
 	/**
+	 * 예약 가능한 방만 조회
+	 */
+	public List<Room> isAvaibleRooms() {
+		try {
+			return roomService.isavaible();
+		} catch (NotFoundException e) {
+			FailView.errorMessage(e.getMessage());
+			return new ArrayList<Room>();
+		}
+	}
+	
+	/**
 	 * 방 추가
 	 **/
-	public void addRoom(Room room, int userId) {
+	public void addRoom(Room room) {
 		try {
-			roomService.addRoom(room, userId);
+			roomService.addRoom(room);
 			SuccessView.messagePrint("방 등록 완료");
 		} catch (DMLException e) {
 			FailView.errorMessage(e.getMessage());
@@ -54,9 +75,9 @@ public class RoomController {
 	/**
 	 * 방 정보 수정
 	 **/
-	public void updateRoom(Room room, int userId) {
+	public void updateRoom(Room room) {
 		try {
-			roomService.modifyRoom(room, userId);
+			roomService.modifyRoom(room);
 			SuccessView.messagePrint("수정완료");
 		} catch (DMLException e) {
 			FailView.errorMessage(e.getMessage());
@@ -66,9 +87,9 @@ public class RoomController {
 	/**
 	 * 방 삭제
 	 **/
-	public void deleteRoom(int roomId, int userId) {
+	public void deleteRoom(int roomId) {
 		try {
-			roomService.removeRoom(roomId, userId);
+			roomService.removeRoom(roomId);
 			SuccessView.messagePrint("삭제 완료");
 		} catch (DMLException e) {
 			FailView.errorMessage(e.getMessage());
