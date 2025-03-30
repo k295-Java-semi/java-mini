@@ -17,7 +17,11 @@ public class User {
         this.role = role;
     }
 
-    public int getUserId() {
+    public User(int int1, String string, String string2) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getUserId() {
         return userId;
     }
 

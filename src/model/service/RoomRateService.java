@@ -1,14 +1,22 @@
 package model.service;
 
-import model.dto.RoomRate;
-
-import java.sql.SQLException;
 import java.util.List;
 
+import model.dto.RoomRate;
+
 public interface RoomRateService {
-    void addRoomRate(RoomRate roomRate) throws SQLException;
-    List<RoomRate> getRoomRatesByRoomId(int roomId) throws SQLException;
-    double getAverageRoomRate(int roomId) throws SQLException; 
-    void updateRoomRate(RoomRate roomRate) throws SQLException; 
-    void deleteRoomRate(int roomRateId) throws SQLException; 
+	// 모든 방 요금 정보 조회
+	List<RoomRate> getAllRoomRates();
+
+	// 특정 방 요금 정보 조회
+	RoomRate getRoomRateById();
+
+	// 방 요금 추가
+	void addRoomRate();
+
+	// 방 요금 수정
+	void updateRoomRate();
+
+	// 방 요금 삭제
+	void deleteRoomRate();
 }

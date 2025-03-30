@@ -1,14 +1,25 @@
 package model.dao;
 
 
+import java.util.List;
+
 import model.dto.User;
 
 public interface UserDao {
-    void insertUser(User user) throws Exception;
-    User selectUserByEmail(String email) throws Exception;
-    User selectUserById(int userId) throws Exception; // 추가
-    void updateUser(User user) throws Exception; // 추가
-    void deleteUser(int userId) throws Exception; // 추가
-    boolean existsByEmail(String email) throws Exception; // 추가
-    void updatePassword(int userId, String newPassword) throws Exception; // 추가
+	
+	// 모든 사용자 조회
+	public List<User> findAllUsers();
+
+    // 특정 사용자 조회
+	public User findUserById(int id);
+
+    // 사용자 추가
+	public void addUser(User user);
+
+    // 사용자 수정
+	public void updateUser(User user);
+
+    // 사용자 삭제
+	public void deleteUser(int id);
+
 }

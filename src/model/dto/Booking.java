@@ -4,12 +4,14 @@ import java.sql.Date;
 
 public class Booking {
     private int bookingId;
-    private String userId;
+    private int userId;
     private int roomId;
     private Date paymentDate;
     private int bookingDetailId;
 
-    public Booking(int bookingId, String userId, int roomId, Date paymentDate, int bookingDetailId) {
+    public Booking() {}
+
+    public Booking(int bookingId, int userId, int roomId, Date paymentDate, int bookingDetailId) {
         this.bookingId = bookingId;
         this.userId = userId;
         this.roomId = roomId;
@@ -28,11 +30,11 @@ public class Booking {
         this.bookingId = bookingId;
     }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -63,10 +65,10 @@ public class Booking {
     @Override
     public String toString() {
         return "Booking{" +
-                "bookingId=" + bookingId +
+                "bookingId=" + bookingId + '\'' +
                 ", userId='" + userId + '\'' +
-                ", roomId=" + roomId +
-                ", paymentDate=" + paymentDate +
+                ", roomId=" + roomId + '\'' +
+                ", paymentDate=" + paymentDate + '\'' +
                 ", bookingDetailId=" + bookingDetailId +
                 '}';
     }
