@@ -21,9 +21,8 @@ public interface BookingService {
 
     // 예약 수정
     void modifyBooking(Booking booking) throws ModifyException;
+    
     // 예약 취소 (삭제)
     void cancelBooking(int id) throws DeleteException;
-
-	
 
 }

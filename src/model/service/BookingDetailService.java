@@ -5,7 +5,7 @@ import model.dto.BookingDetail;
 import java.util.List;
 
 public interface BookingDetailService {
-    //모든 예약 상세 조회
+	//모든 예약 상세 조회
     public List<BookingDetail> getAllBookingDetails();
 
     //예약 상세 번호를 통한 조회

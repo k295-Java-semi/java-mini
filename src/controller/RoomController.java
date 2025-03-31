@@ -37,13 +37,15 @@ public class RoomController {
 	
 	/**
 	 * 특정 방 정보 조회
+	 * @return 
 	 **/
-	public void getRoomById(int roomId) {
+	public Room getRoomById(int roomId) {
 		try {
 			Room room = roomService.getRoom(roomId);
-			SuccessView.selectByNoPrint(room);
+			return room;
 		} catch (SearchWrongException e) {
 			FailView.errorMessage(e.getMessage());
+			return null;
 		}
 	}
 	

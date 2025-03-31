@@ -9,10 +9,13 @@ import pension.exception.DeleteException;
 import pension.exception.FindException;
 import pension.exception.ModifyException;
 
-public abstract class BookingServiceImpl implements BookingService {
+public class BookingServiceImpl implements BookingService {
+	
+	private static BookingService instance = new BookingServiceImpl();
+	private BookingDao bookingDao
 	private BookingDao bookingDao;
 
-	public BookingServiceImpl(BookingDao bookingDao) {
+	public BookingServiceImpl() {
 		this.bookingDao = bookingDao;
 	}
 

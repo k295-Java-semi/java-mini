@@ -3,6 +3,7 @@ package model.dto;
 import java.sql.Date;
 
 public class Booking {
+    private int guestCount;
     private int bookingId;
     private int userId;
     private int roomId;
@@ -17,6 +18,18 @@ public class Booking {
         this.roomId = roomId;
         this.paymentDate = paymentDate;
         this.bookingDetailId = bookingDetailId;
+    }
+
+    public Booking(int i, String userId, int roomId) {
+        this.bookingId = i;
+        this.userId = Integer.parseInt(userId);
+        this.roomId = roomId;
+    }
+
+    public Booking(int userId, int guestCount, Date paymentDate) {
+        this.userId = userId;
+        this.guestCount = guestCount;
+        this.paymentDate = paymentDate;
     }
 
     // Getters, Setters, toString

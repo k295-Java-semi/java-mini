@@ -8,7 +8,7 @@ import java.util.List;
 public class BookingDetailServiceImpl implements BookingDetailService {
     private BookingDetailDao BookingDetailDao;
 
-    public BookingDetailServiceImpl(BookingDetailDao BookingDetailDao) {
+    public BookingDetailServiceImpl() {
         this.BookingDetailDao = BookingDetailDao;
     }
 
