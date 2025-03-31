@@ -5,6 +5,7 @@ import model.dao.RoomRateDaoImpl;
 import model.dto.*;
 import pension.exception.NotFoundException;
 import session.Session;
+import util.Design;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -20,9 +21,9 @@ public class MenuView {
     private static AttractionRateController attractionRateController = new AttractionRateController();
 
     public static void main(String[] args) {
-        System.out.println("==============================================");
-        System.out.println("\"라비에뜨 펜션 (La Viette,  ‘작은 삶의 기쁨’) 에 온 것을 환영합니다\"");
-        System.out.println("==============================================");
+        System.out.println("=======================================================");
+        System.out.println("라비에뜨 펜션 (La Viette,  ‘작은 삶의 기쁨’) 에 온 것을 환영합니다.");
+        System.out.println("=======================================================");
         
         boolean loggedIn = false;
         
@@ -37,9 +38,9 @@ public class MenuView {
      * 처음 메뉴
      */
     private static boolean printLoginMenu() {
-    	System.out.println("==============================================");
-        System.out.println("메뉴 1. 회원가입 | 2. 로그인 | 3. 종료");
-        System.out.println("==============================================");
+    	System.out.println("==================================");
+        System.out.println("메뉴 1. 회원가입 | 2. 로그인 | 3. 종료 |");
+        System.out.println("==================================");
         System.out.print("선택 > ");
         String choice = sc.nextLine();
         
@@ -89,9 +90,9 @@ public class MenuView {
      */
     private static void printAdminMenu() {
     	while (true) {
-    		System.out.println("=================관리자 전용==================");
+    		System.out.println("=================관리자 전용================");
     		System.out.println("메뉴 1. 방 관리 | 2. 관광지 관리 | 3. 로그아웃  |");
-    		System.out.println("============================================");
+    		System.out.println("=========================================");
     		System.out.print("선택 > ");
     		String choice = sc.nextLine();
     		
@@ -122,7 +123,7 @@ public class MenuView {
      */
     private static void printAdminDetailMenu() {
     	System.out.println("================================================");
-		System.out.println("메뉴 1. 방 등록 | 2. 방 수정 | 3. 방 삭제 | 4. 이전으로  |");
+		System.out.println("메뉴 1. 방 등록 | 2. 방 수정 | 3. 방 삭제 | 4. 이전으로 |");
 		System.out.println("================================================");
 		System.out.print("선택 > ");
 		String choice = sc.nextLine();
@@ -141,7 +142,8 @@ public class MenuView {
 			break;
 		
 		case "4":
-			printAdminMenu();
+			System.out.println("이전 메뉴로 돌아갑니다.\n");
+			return;
 		default:
 			printError("잘못된 선택입니다.");						
 		}		
@@ -152,9 +154,9 @@ public class MenuView {
      */
     private static void manageAttractions() {
     	while(true) {
-    		System.out.println("==================================================================");
-    		System.out.println("1. 관광지 추가 | 2. 관광지 조회 | 3. 관광지 수정 | 4. 관광지 삭제 | 5. 이전으로");
-    		System.out.println("==================================================================");
+    		System.out.println("===================================================================");
+    		System.out.println("1. 관광지 추가 | 2. 관광지 조회 | 3. 관광지 수정 | 4. 관광지 삭제 | 5. 이전으로 |");
+    		System.out.println("===================================================================");
     		System.out.print("선택 > ");
     		String choice = sc.nextLine();
     		
@@ -171,9 +173,9 @@ public class MenuView {
     		case "4":
     			EndAttractionView.deleteAttraction();
     			break;
-    		
     		case "5":
-    			printAdminMenu();
+    			System.out.println("이전 메뉴로 돌아갑니다.\n");
+    			return;
     		default:
     			printError("잘못된 선택입니다.");
     		}    		
@@ -185,9 +187,9 @@ public class MenuView {
      */
     private static void printUserMenu() {
     	while(true) {
-    		System.out.println("==============================================");
-    		System.out.println("메뉴 1. 방 소개 | 2. 예약하기 | 3. 관광지 소개 | 4. 오시는 길 | 5. 마이페이지 | 6. 종료");
-    		System.out.println("==============================================");
+    		System.out.println("==========================================================================");
+    		System.out.println("메뉴 1. 방 소개 | 2. 예약하기 | 3. 관광지 소개 | 4. 오시는 길 | 5. 마이페이지 | 6. 종료 |");
+    		System.out.println("==========================================================================");
     		System.out.print("선택 > ");
     		String choice = sc.nextLine();
     		
@@ -312,9 +314,9 @@ public class MenuView {
         try {
             List<Attraction> attractions = attractionController.selectAllAttractions();
             System.out.println("관광지 목록:");
-            System.out.println("----------------------------------------------------------");
-            System.out.printf("| %-11s | %-20s | %-50s | %-8s |\n", "ID", "이름", "주소", "입장 여부");
-            System.out.println("----------------------------------------------------------");
+            System.out.println("-----------------------------------------------------------------");
+            System.out.printf("| %-11s | %-20s | %-50s | %-8s |\n", "ID", "이름", "주소", "입장 여부 |");
+            System.out.println("-----------------------------------------------------------------");
             for (Attraction attraction : attractions) {
                 System.out.printf("| %-11d | %-20s | %-50s | %-8s |\n",
                     attraction.getAttractionId(), attraction.getAttractionName(), attraction.getAddress(),
@@ -463,7 +465,9 @@ public class MenuView {
 
     private static void manageRoomRates() {
         while (true) {
-            System.out.println("1. 평점 추가 | 2. 전체 평점 조회 | 3. 평점 조회 | 4. 평점 수정 | 5. 평점 삭제 |");
+        	System.out.println("------------------------------------------------------------------------------");
+            System.out.println("1. 평점 추가 | 2. 전체 평점 조회 | 3. 평점 조회 | 4. 평점 수정 | 5. 평점 삭제 | 6. 이전으로 |");
+            System.out.println("------------------------------------------------------------------------------");
             System.out.print("선택 > ");
             String choice = sc.nextLine();
     
@@ -483,15 +487,20 @@ public class MenuView {
                 case "5":
                 	EndRoomRateView.deleteRoomRate();
                     break;     
+                case "6":
+                   System.out.println("이전 메뉴로 돌아갑니다.\n");
+                    return; 
                 default:
                     printError("잘못된 선택입니다.");
             }
         }
      }
 
-     private static void manageAttractionRates() {
+    private static void manageAttractionRates() {
         while (true) {
-            System.out.println("1. 평점 추가 | 2. 평점 조회 | 3. 평균 평점 조회 | 4. 평점 수정 | 5. 평점 삭제 |");
+        	System.out.println("-------------------------------------------------------------------------------------");
+            System.out.println("1. 평점 추가 | 2. 전체 평점 조회 | 3. 관광지별 평점 조회 | 4. 평점 수정 | 5. 평점 삭제 | 6. 이전으로 |");
+            System.out.println("-------------------------------------------------------------------------------------");
             System.out.print("선택 > ");
             String choice = sc.nextLine();
     
@@ -500,17 +509,20 @@ public class MenuView {
                     EndAttractionRateView.addAttractionRate();
                     break;
                 case "2":
-                	EndAttractionRateView.viewAttractionRatesById();
-                    break;
+                	EndAttractionRateView.selectAllAttractionRates();
+                   break;
                 case "3":
-                	EndAttractionRateView.viewAttractionAverageScore();
-                    break;
+                	EndAttractionRateView.viewAttractionRatesById();
+                    break;           
                 case "4":
                 	EndAttractionRateView.updateAttractionRate();
                     break;
                 case "5":
                 	EndAttractionRateView.deleteAttractionRate();
                     break;
+                case "6":
+                    System.out.println("이전 메뉴로 돌아갑니다.\n");
+                     return; 
                 default:
                     printError("잘못된 선택입니다.");
             }
