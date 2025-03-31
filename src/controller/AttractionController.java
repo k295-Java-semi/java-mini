@@ -1,10 +1,5 @@
 package controller;
 
-<<<<<<< HEAD
-public class AttractionController {
-
-}
-=======
 import model.dto.Attraction;
 import model.service.AttractionService;
 import model.service.AttractionServiceImpl;
@@ -54,4 +49,3 @@ public class AttractionController {
         }
     }
 }
->>>>>>> develop

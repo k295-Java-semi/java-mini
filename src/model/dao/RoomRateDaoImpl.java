@@ -1,38 +1,5 @@
 package model.dao;
 
-<<<<<<< HEAD
-import model.dto.RoomRate;
-
-import java.util.List;
-
-public class RoomRateDaoImpl implements RoomRateDao {
-    @Override
-    public List<RoomRate> findAllRoomRates() {
-
-        return null;
-    }
-
-    @Override
-    public RoomRate findRoomRateById(int id) {
-        return null;
-    }
-
-    @Override
-    public void createRoomRate(RoomRate roomRate) {
-
-    }
-
-    @Override
-    public void updateRoomRate(RoomRate rate) {
-
-    }
-
-    @Override
-    public void deleteRoomRate(int id) {
-
-    }
-
-=======
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -221,5 +188,4 @@ public class RoomRateDaoImpl implements RoomRateDao {
         }
         return false; // 예외 발생 시 또는 결과가 없으면 false 반환
     }
->>>>>>> develop
 }

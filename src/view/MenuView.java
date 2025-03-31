@@ -218,6 +218,7 @@ public class MenuView {
     }
 
     /**
+     * 
      * 모든 방 조회
      */
     private static void viewRooms() {

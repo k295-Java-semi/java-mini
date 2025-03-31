@@ -1,19 +1,5 @@
 package model.dao;
 
-<<<<<<< HEAD
-public interface AttractionDao {
-
-    public void findAllAttractions();
-
-    public void findAttractionById(int id);
-
-    public void createAttraction(String name, String address, String tel, String url);
-
-    public void updateAttraction(int id, String name, String address, String tel, String url);
-
-    public void deleteAttraction(int id);
-
-=======
 import java.sql.SQLException;
 import java.util.List;
 
@@ -35,5 +21,4 @@ public interface AttractionDao {
 	 
 	// 관광지 삭제
 	public int deleteAttraction(int attractionId) throws SQLException;
->>>>>>> develop
 }

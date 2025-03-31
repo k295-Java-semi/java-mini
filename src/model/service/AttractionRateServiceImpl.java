@@ -1,39 +1,5 @@
 package model.service;
 
-<<<<<<< HEAD
-import java.util.List;
-
-import model.dto.AttractionRate;
-
-public class AttractionRateServiceImpl implements AttractionRateService {
-    private AttractionRateServiceImpl AttractionRateServiceImpl;
-
-    @Override
-    public List<AttractionRate> getAllAttractionRates() {
-        return null;
-    }
-
-    @Override
-    public AttractionRate getAttractionRateById(int id) {
-        return null;
-    }
-
-    @Override
-    public void addAttractionRate(AttractionRate rate) {
-        AttractionRateServiceImpl.addAttractionRate(rate);
-    }
-
-    @Override
-    public void updateAttractionRate(AttractionRate rate) {
-        AttractionRateServiceImpl.updateAttractionRate(rate);
-    }
-
-    @Override
-    public void deleteAttractionRate(int id) {
-        AttractionRateServiceImpl.deleteAttractionRate(id);
-    }
-}
-=======
 import model.dao.AttractionRateDao;
 import model.dao.AttractionRateDaoImpl;
 import model.dto.AttractionRate;
@@ -82,9 +48,4 @@ public class AttractionRateServiceImpl implements AttractionRateService {
         int result = attractionRateDao.deleteAttractionRate(attractionRateId);
         if (result == 0) throw new SQLException("관광지 평점 삭제에 실패하였습니다.");
     }
-
-
-
-	
 }
->>>>>>> develop

@@ -1,6 +1,6 @@
 package model.dto;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class BookingDetail {
     private int bookingDetailId;
@@ -53,7 +53,7 @@ public class BookingDetail {
         this.totalPrice = totalPrice;
     }
 
-    public java.sql.Date getCheckInDate() {
+    public Date getCheckInDate() {
         return checkInDate;
     }
 
@@ -61,7 +61,7 @@ public class BookingDetail {
         this.checkInDate = checkInDate;
     }
 
-    public java.sql.Date getCheckOutDate() {
+    public Date getCheckOutDate() {
         return checkOutDate;
     }
 

@@ -1,26 +1,11 @@
 package model.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import model.dto.RoomRate;
 
 public interface RoomRateService {
-<<<<<<< HEAD
-	// 모든 방 요금 정보 조회
-	List<RoomRate> getAllRoomRates();
-
-	// 특정 방 요금 정보 조회
-	RoomRate getRoomRateById();
-
-	// 방 요금 추가
-	void addRoomRate();
-
-	// 방 요금 수정
-	void updateRoomRate();
-
-	// 방 요금 삭제
-	void deleteRoomRate();
-=======
 	
 	// 방 평점 추가
     void addRoomRate(RoomRate roomRate) throws SQLException;
@@ -36,5 +21,4 @@ public interface RoomRateService {
     
     // 방 평점 삭제
     void deleteRoomRate(int roomRateId) throws SQLException; 
->>>>>>> develop
 }

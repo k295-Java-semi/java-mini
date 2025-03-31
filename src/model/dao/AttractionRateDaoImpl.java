@@ -1,35 +1,5 @@
 package model.dao;
 
-<<<<<<< HEAD
-import model.dto.AttractionRate;
-
-public class AttractionRateDaoImpl implements AttractionRateDao {
-    @Override
-    public void findAllAttractionRates() {
-
-    }
-
-    @Override
-    public void findAttractionRateById(int id) {
-
-    }
-
-    @Override
-    public void saveAttractionRate(AttractionRate rate) {
-
-    }
-
-    @Override
-    public void updateAttractionRate(AttractionRate rate) {
-
-    }
-
-    @Override
-    public void deleteAttractionRate(int id) {
-
-    }
-}
-=======
 import model.dto.Attraction;
 import model.dto.AttractionRate;
 import util.DBManager;
@@ -193,4 +163,3 @@ public class AttractionRateDaoImpl implements AttractionRateDao {
         return result;
     }
 }
->>>>>>> develop

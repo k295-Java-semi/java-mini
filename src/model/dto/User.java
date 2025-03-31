@@ -26,17 +26,11 @@ public class User {
     	this.password = password;
     }
 
-<<<<<<< HEAD
-    public User(int int1, String string, String string2) {
-		// TODO Auto-generated constructor stub
-	}
-=======
     public User (int userId, String email, String password, String phone) {
     	this(email, password);
     	this.userId = userId;
     	this.phone = phone;
     }
->>>>>>> develop
 
 	public int getUserId() {
         return userId;

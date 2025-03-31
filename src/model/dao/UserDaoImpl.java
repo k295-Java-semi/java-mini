@@ -1,37 +1,5 @@
 package model.dao;
 
-<<<<<<< HEAD
-import model.dto.User;
-
-import java.util.List;
-
-public class UserDaoImpl implements UserDao {
-    @Override
-    public List<User> findAllUsers() {
-        return List.of();
-    }
-
-    @Override
-    public User findUserById(int id) {
-
-        return null;
-    }
-
-    @Override
-    public void addUser(User user) {
-
-    }
-
-    @Override
-    public void updateUser(User user) {
-
-    }
-
-    @Override
-    public void deleteUser(int id) {
-
-    }
-=======
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -281,5 +249,4 @@ public class UserDaoImpl implements UserDao {
 		return false;
 	}
 
->>>>>>> develop
 }
