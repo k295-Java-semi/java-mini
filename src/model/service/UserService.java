@@ -1,16 +1,45 @@
 package model.service;
 
-import java.sql.SQLException;
-
 import model.dto.User;
+import pension.exception.DMLException;
 import pension.exception.NotFoundException;
+import session.Session;
 
 public interface UserService {
-    void register(User user) throws SQLException;
-    User login(String email, String password) throws NotFoundException, SQLException;
-    User getUserById(int userId) throws SQLException; 
-    void updateUser(User user) throws SQLException; 
-    void deleteUser(int userId) throws SQLException; 
-    boolean checkEmailExists(String email) throws SQLException; 
-    void changePassword(int userId, String newPassword) throws SQLException; 
+    
+	/**
+	 * 회원가입
+	 */
+	void newRegister(User user) throws DMLException;
+	
+	/**
+	 * 로그인
+	 */
+	Session login(String email, String password) throws NotFoundException;
+	
+	/**
+	 * 회원 정보 조회
+	 */
+	User userInfo(int userId) throws NotFoundException;
+	
+	/**
+	 * 회원 정보 수정
+	 */
+	void updateUser(Session session, User user) throws DMLException;
+	
+	/**
+	 * 로그아웃
+	 */
+	void logout(Session session);
+	
+	/**
+	 * 회원 탈퇴
+	 */
+	void deleteUser(Session session) throws DMLException;
+	
+	/**
+	 * 권한 확인
+	 */
+	boolean roleCheck(Session session) throws NotFoundException;
+	
 }
