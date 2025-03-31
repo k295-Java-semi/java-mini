@@ -65,6 +65,20 @@ public class UserController {
 	}
 	
 	/**
+	 * 회원 정보 조회
+	 */
+	public User userInfo(int userId) {
+		try {
+			User user = userService.userInfo(userId);
+			return user;
+		} catch (NotFoundException e) {
+			FailView.errorMessage(e.getMessage());
+			return null;
+		}
+		
+	}
+	
+	/**
 	 * 회원 정보 수정
 	 */
 	public void updateInfo(Session session, User user) {

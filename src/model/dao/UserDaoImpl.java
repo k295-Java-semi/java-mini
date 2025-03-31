@@ -84,9 +84,43 @@ public class UserDaoImpl implements UserDao {
 		} finally {
 			DBManager.close(con, ps, rs);
 		}
-		
-//		return null;
 	}
+	
+	/**
+	 * 회원 정보 조회
+	 * Query : select * from user where user_id = ?
+	 */
+	@Override
+	public User userInfo(int userId) throws NotFoundException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		User user = null;
+		String sql = "select * from user where user_id = ?";
+		
+		try {
+			con = DBManager.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, userId);
+			rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				String name = rs.getString("name");
+				String phone = rs.getString("phone");
+				String email = rs.getString("email");
+				String password = rs.getString("password");
+				
+				user = new User(name, phone, email, password);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new NotFoundException("사용자가 없습니다.");
+		} finally {
+			DBManager.close(con, ps, rs);
+		}
+		return user;
+	}
+	
 	
 	/**
 	 * 회원 정보 수정

@@ -82,12 +82,9 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
-                '}';
+        return
+                "이름 : '" + name + '\'' +
+                ", 전화번호 : '" + phone + '\'' +
+                ", 이메일 : '" + email + '\'';
     }
 }

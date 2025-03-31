@@ -18,6 +18,11 @@ public interface UserService {
 	Session login(String email, String password) throws NotFoundException;
 	
 	/**
+	 * 회원 정보 조회
+	 */
+	User userInfo(int userId) throws NotFoundException;
+	
+	/**
 	 * 회원 정보 수정
 	 */
 	void updateUser(Session session, User user) throws DMLException;

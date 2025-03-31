@@ -30,6 +30,18 @@ public class UserServiceImpl implements UserService {
 		
 		return userDao.login(email, password);
 	}
+	
+	/**
+	 * 회원 정보 조회
+	 */
+	@Override
+	public User userInfo(int userId) throws NotFoundException {
+		User user = userDao.userInfo(userId);
+		if (user == null) {
+			throw new NotFoundException("사용자가 없습니다.");
+		}
+		return user;
+	}
 
 	/**
 	 * 회원 정보 수정
