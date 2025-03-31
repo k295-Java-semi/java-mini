@@ -77,14 +77,14 @@ public class BookingDaoImpl implements BookingDao {
 
         try {
             con = DBManager.getConnection();
-            pstmt = con.prepareStatement("INSERT INTO BOOKING VALUES(?,?,?,?,?,?,?,?,?)");
+            pstmt = con.prepareStatement("INSERT INTO BOOKING(user_id, room_id, payment_date) VALUES(?,?,?)");
 
             result = pstmt.executeUpdate();
 
-            pstmt.setInt(1, booking.getBookingId());
-            pstmt.setInt(2, booking.getUserId());
-            pstmt.setInt(3, booking.getRoomId());
-            pstmt.setDate(4,booking.getPaymentDate());
+            pstmt.setInt(1, booking.getUserId());
+            pstmt.setInt(2, booking.getRoomId());
+            pstmt.setDate(3, booking.getPaymentDate());
+
 
             if(result == 0){
                 System.out.println("등록되지 않았습니다. 다시 시도해주세요.");

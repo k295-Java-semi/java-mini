@@ -8,7 +8,6 @@ import model.service.RoomServiceImpl;
 import pension.exception.DMLException;
 import pension.exception.NotFoundException;
 import pension.exception.SearchWrongException;
-import session.Session;
 import view.FailView;
 import view.SuccessView;
 
@@ -37,14 +36,17 @@ public class RoomController {
 	
 	/**
 	 * 특정 방 정보 조회
-	 **/
-	public void getRoomById(int roomId) {
+	 *
+	 * @return
+	 */
+	public Room getRoomById(int roomId) {
 		try {
 			Room room = roomService.getRoom(roomId);
 			SuccessView.selectByNoPrint(room);
 		} catch (SearchWrongException e) {
 			FailView.errorMessage(e.getMessage());
 		}
+		return null;
 	}
 	
 	/**

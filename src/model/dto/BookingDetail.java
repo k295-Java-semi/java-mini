@@ -9,6 +9,10 @@ public class BookingDetail {
     private int totalPrice;
     private Date checkInDate;
     private Date checkOutDate;
+    private User user;
+    private Room room;
+
+
 
     public BookingDetail() {}
 
@@ -80,4 +84,21 @@ public class BookingDetail {
                 ", checkOutDate=" + checkOutDate +
                 '}';
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
 }
