@@ -8,18 +8,35 @@ public class User {
     private String password;
     private String role;
 
-    public User(int userId, String name, String phone, String email, String password, String role) {
-        this.userId = userId;
+    public User(String name, String phone, String email, String password) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.password = password;
-        this.role = role;
+        this.role = "guest";
+    }
+    
+    public User(String name, String phone, String email, String password, String role) {
+    	this(name, phone, email, password);
+    	this.role = role;
+    }
+    
+    public User (String email, String password) {
+    	this.email = email;
+    	this.password = password;
     }
 
+<<<<<<< HEAD
     public User(int int1, String string, String string2) {
 		// TODO Auto-generated constructor stub
 	}
+=======
+    public User (int userId, String email, String password, String phone) {
+    	this(email, password);
+    	this.userId = userId;
+    	this.phone = phone;
+    }
+>>>>>>> develop
 
 	public int getUserId() {
         return userId;
@@ -71,12 +88,9 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
-                '}';
+        return
+                "이름 : '" + name + '\'' +
+                ", 전화번호 : '" + phone + '\'' +
+                ", 이메일 : '" + email + '\'';
     }
 }
