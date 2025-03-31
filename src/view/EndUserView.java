@@ -20,6 +20,8 @@ public class EndUserView {
 	        
 	    System.out.print("전화번호 : ");
 	    String phone = sc.nextLine();
+	    
+	    phone = formatPhoneNumber(phone);
 	        
 	    System.out.print("이메일 : ");
 	    String email = sc.nextLine();
@@ -31,6 +33,17 @@ public class EndUserView {
 	    User user = new User(name, phone, email, password);
 	     
 	    UserController.getInstance().register(user);
+	}
+	
+	private static String formatPhoneNumber(String phone) {
+		phone = phone.replaceAll("[^0-9]", "");
+		
+		if (phone.length() == 11) {
+			return phone.replaceFirst("(\\d{3})(\\d{4})(\\d{4})", "$1-$2-$3");
+		} else {
+			System.out.println("전화번호 형식이 잘못되었습니다.");
+			return phone;
+		}
 	}
 	
 	/**

@@ -131,29 +131,28 @@ public class RoomRateDaoImpl implements RoomRateDao {
 	}
     
     // 방 평점 수정 -> room_score, comment, visible(0,1) 전부 수정 가능
-  	@Override
-  	public int updateRoomRate(RoomRate roomRate) throws SQLException {
-  		Connection conn = null;
+    @Override
+    public int updateRoomRate(RoomRate roomRate) throws SQLException {
+        Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        int result = 0;
         String sql = "UPDATE room_rate SET room_score = ?, comment = ?, visible = ? WHERE roomrate_id = ?";
         try {
-        	conn = DBManager.getConnection();
-        	pstmt = conn.prepareStatement(sql);
-        	pstmt.setInt(1, roomRate.getRoomScore());
-        	pstmt.setString(2, roomRate.getComment());
-        	pstmt.setBoolean(3, roomRate.isVisible());
-        	pstmt.setInt(4, roomRate.getRoomId());
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, roomRate.getRoomScore());
+            pstmt.setString(2, roomRate.getComment());
+            pstmt.setBoolean(3, roomRate.isVisible());
+            pstmt.setInt(4, roomRate.getRoomRateId()); 
+            result = pstmt.executeUpdate(); 
         } catch (SQLException e) {
-
-        	e.printStackTrace();
-		} finally {
-			
-			
-		}
-        return 0;
-	}
-    
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt, rs);
+        }
+        return result; 
+    }
     // 방 평점 삭제
   	@Override
     public int deleteRoomRate(int roomRateId) throws SQLException {
@@ -174,4 +173,19 @@ public class RoomRateDaoImpl implements RoomRateDao {
         }
         return result;
 	}
+  	
+  	public boolean existsById(int roomRateId) {
+        String sql = "SELECT COUNT(*) FROM room_rate WHERE roomrate_id = ?";
+        try (Connection conn = DBManager.getConnection(); // DB 연결 클래스 가정
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, roomRateId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // 결과가 1 이상이면 해당 ID가 존재
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // 예외 발생 시 로그 출력 (실제로는 로깅 프레임워크 사용 권장)
+        }
+        return false; // 예외 발생 시 또는 결과가 없으면 false 반환
+    }
 }

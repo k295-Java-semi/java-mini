@@ -1,6 +1,7 @@
 package view;
 
 import controller.*;
+import model.dao.RoomRateDaoImpl;
 import model.dto.*;
 import pension.exception.NotFoundException;
 import session.Session;
@@ -123,6 +124,7 @@ public class MenuView {
     	System.out.println("================================================");
 		System.out.println("메뉴 1. 방 등록 | 2. 방 수정 | 3. 방 삭제 | 4. 이전으로  |");
 		System.out.println("================================================");
+		System.out.print("선택 > ");
 		String choice = sc.nextLine();
 		
 		switch (choice) {
@@ -139,7 +141,7 @@ public class MenuView {
 			break;
 		
 		case "4":
-		
+			printAdminMenu();
 		default:
 			printError("잘못된 선택입니다.");						
 		}		
@@ -149,61 +151,70 @@ public class MenuView {
      * 관리자 = 관광지 관리 메뉴
      */
     private static void manageAttractions() {
-        System.out.println("1. 관광지 추가 | 2. 관광지 조회 | 3. 관광지 수정 | 4. 관광지 삭제");
-        System.out.print("선택 > ");
-        String choice = sc.nextLine();
-
-        switch (choice) {
-            case "1":
-                EndAttractionView.addAttraction();
-                break;
-            case "2":
-            	EndAttractionView.viewAttractionById();
-                break;
-            case "3":
-            	EndAttractionView.updateAttraction();
-                break;
-            case "4":
-            	EndAttractionView.deleteAttraction();
-                break;
-            default:
-                printError("잘못된 선택입니다.");
-        }
+    	while(true) {
+    		System.out.println("==================================================================");
+    		System.out.println("1. 관광지 추가 | 2. 관광지 조회 | 3. 관광지 수정 | 4. 관광지 삭제 | 5. 이전으로");
+    		System.out.println("==================================================================");
+    		System.out.print("선택 > ");
+    		String choice = sc.nextLine();
+    		
+    		switch (choice) {
+    		case "1":
+    			EndAttractionView.addAttraction();
+    			break;
+    		case "2":
+    			EndAttractionView.viewAttractionById();
+    			break;
+    		case "3":
+    			EndAttractionView.updateAttraction();
+    			break;
+    		case "4":
+    			EndAttractionView.deleteAttraction();
+    			break;
+    		
+    		case "5":
+    			printAdminMenu();
+    		default:
+    			printError("잘못된 선택입니다.");
+    		}    		
+    	}
     }
 
     /**
      * 권한 = guest에게 보여주는 메뉴
      */
     private static void printUserMenu() {
-        System.out.println("==============================================");
-        System.out.println("메뉴 1. 방 소개 | 2. 예약하기 | 3. 관광지 소개 | 4. 오시는 길 | 5. 마이페이지 | 6. 종료");
-        System.out.println("==============================================");
-        System.out.print("선택 > ");
-        String choice = sc.nextLine();
-
-        switch (choice) {
-            case "1":
-                viewRooms();
-                break;
-            case "2":
-                //makeReservation();
-                break;
-            case "3":
-                viewAttractions();
-                break;
-            case "4":
-                viewDirections();
-                break;
-            case "5":
-                viewMyPage();
-                break;
-            case "6":
-                System.out.println("프로그램을 종료합니다.");
-                System.exit(0);
-                break;
-            default:
-                printError("잘못된 선택입니다.");
-        }
+    	while(true) {
+    		System.out.println("==============================================");
+    		System.out.println("메뉴 1. 방 소개 | 2. 예약하기 | 3. 관광지 소개 | 4. 오시는 길 | 5. 마이페이지 | 6. 종료");
+    		System.out.println("==============================================");
+    		System.out.print("선택 > ");
+    		String choice = sc.nextLine();
+    		
+    		switch (choice) {
+    		case "1":
+    			viewRooms();
+    			break;
+    		case "2":
+    			//makeReservation();
+    			break;
+    		case "3":
+    			viewAttractions();
+    			break;
+    		case "4":
+    			viewDirections();
+    			break;
+    		case "5":
+    			viewMyPage();
+    			break;
+    		case "6":
+    			System.out.println("프로그램을 종료합니다.");
+    			System.exit(0);
+    			break;
+    		default:
+    			printError("잘못된 선택입니다.");
+    		}    		
+    	}
     }
 
     /**
@@ -211,18 +222,20 @@ public class MenuView {
      */
     private static void viewRooms() {
         try {
-            List<Room> rooms = roomController.getAllRooms();
-            System.out.println("--------------------------------------");
-            System.out.println("| 방 번호 | 타입 | 크기   |    가격    | 인원 수 | 상태  |");
-            System.out.println("--------------------------------------");
+           List<Room> rooms = roomController.getAllRooms();
+            System.out.println("---------------------------------------------------------");
+            System.out.printf("| %-6s| %-7s| %-4s| %-5s| %-11s| %-7s| %-5s |\n",
+                    "방 아이디", "방 번호", "타입", "크기", "가격", "인원 수", "상태");
+            System.out.println("---------------------------------------------------------");
             
             NumberFormat currencyFormat = NumberFormat.getInstance();
             for (Room room : rooms) {
-            	String availability = room.isAvailable() ? "에약 가능" : "예약 중";
-            	
-            	String sizeIn = convertSizeTo(room.getSize());
-            	
-            	System.out.printf("| %-5s | %-3s | %-4s | %-10s | %-4d | %-5s |\n",
+               String availability = room.isAvailable() ? "에약 가능" : "예약 중";
+               
+               String sizeIn = convertSizeTo(room.getSize());
+               
+               System.out.printf("| %-7d | %-7s | %-4s | %-5s | %-11s | %-7d | %-9s |\n",
+                     room.getRoomId(),
                         room.getRoomNumber(),
                         room.getType(),
                         sizeIn,
@@ -317,35 +330,43 @@ public class MenuView {
     }
 
     private static void viewMyPage() {
-    	Session session = userController.getInstance().getSession();
-        System.out.println("[마이페이지]");
-        System.out.println(userController.userInfo(session.getUserId()));
-//        userController.userInfo(session.getUserId());
-        System.out.println("===============================");
-        System.out.println("1. 예약 내역 | 2. 방 평점 관리 | 3. 관광지 평점 관리 | 4. 관광지 관리 (관리자용)");
-        System.out.print("선택 > ");
-        String choice = sc.nextLine();
-
-        switch (choice) {
-            case "1":
-                // viewBookingHistory();
-                break;
-            case "2":
-                manageRoomRates();
-                break;
-            case "3":
-                manageAttractionRates();
-                break;
-            case "4":
-                manageAttractions(); // 관리자 체크 제거 또는 별도 입력으로 대체 가능
-                break;
-            default:
-                printError("잘못된 선택입니다.");
-        }
+    	while(true) {
+    		Session session = userController.getInstance().getSession();
+    		System.out.println("[마이페이지]");
+    		System.out.println(userController.userInfo(session.getUserId()));
+    		System.out.println("=========================================================================");
+    		System.out.println("1. 예약 내역 | 2. 회원 정보 수정 | 3. 방 평점 관리 | 4. 관광지 평점 관리 | 5. 회원탈퇴 |");
+    		System.out.println("=========================================================================");
+    		System.out.print("선택 > ");
+    		String choice = sc.nextLine();
+    		
+    		switch (choice) {
+    		case "1":
+    			// viewBookingHistory();
+    			break;
+    		case "2":
+    			EndUserView.updateUserInfo();
+    			break;
+    		case "3":
+    			manageRoomRates();
+    			break;
+    		case "4":
+    			manageAttractionRates(); 
+    			break;
+    			
+    		case "5":
+    			EndUserView.deleteUser();
+    			printLoginMenu();
+    			return;
+    		default:
+    			printError("잘못된 선택입니다.");
+    		}    		
+    	}
     }
 
     /**
     private static void viewBookingHistory() {
+    
         try {
             System.out.print("사용자 ID를 입력해주세요: ");
             String userId = sc.nextLine();
@@ -440,189 +461,60 @@ public class MenuView {
     **/
 
     private static void manageRoomRates() {
-        System.out.println("1. 평점 추가 | 2. 평점 조회 | 3. 평균 평점 조회 | 4. 평점 수정 | 5. 평점 삭제 | 6. 상위 평점 방 조회");
-        System.out.print("선택 > ");
-        String choice = sc.nextLine();
-
-        switch (choice) {
-            case "1":
-                addRoomRate();
-                break;
-            case "2":
-                viewRoomRatesById();
-                break;
-            case "3":
-                // viewRoomAverageScore();
-                break;
-            case "4":
-                updateRoomRate();
-                break;
-            case "5":
-                deleteRoomRate();
-                break;
-            default:
-                printError("잘못된 선택입니다.");
+        while (true) {
+            System.out.println("1. 평점 추가 | 2. 전체 평점 조회 | 3. 평점 조회 | 4. 평점 수정 | 5. 평점 삭제 |");
+            System.out.print("선택 > ");
+            String choice = sc.nextLine();
+    
+            switch (choice) {
+                case "1":
+                    EndRoomRateView.addRoomRate();
+                    break;
+                case "2":
+                	EndRoomRateView.selectAllRoomRates();
+                   break;
+                case "3":
+                	EndRoomRateView.viewRoomRatesById();
+                    break;
+                case "4":
+                	EndRoomRateView.updateRoomRate();
+                    break;
+                case "5":
+                	EndRoomRateView.deleteRoomRate();
+                    break;     
+                default:
+                    printError("잘못된 선택입니다.");
+            }
         }
-    }
+     }
 
-    private static void manageAttractionRates() {
-        System.out.println("1. 평점 추가 | 2. 평점 조회 | 3. 평균 평점 조회 | 4. 평점 수정 | 5. 평점 삭제 | 6. 상위 평점 관광지 조회");
-        System.out.print("선택 > ");
-        String choice = sc.nextLine();
-
-        switch (choice) {
-            case "1":
-                addAttractionRate();
-                break;
-            case "2":
-                viewAttractionRatesById();
-                break;
-            case "3":
-                viewAttractionAverageScore();
-                break;
-            case "4":
-                updateAttractionRate();
-                break;
-            case "5":
-                deleteAttractionRate();
-                break;
-            default:
-                printError("잘못된 선택입니다.");
+     private static void manageAttractionRates() {
+        while (true) {
+            System.out.println("1. 평점 추가 | 2. 평점 조회 | 3. 평균 평점 조회 | 4. 평점 수정 | 5. 평점 삭제 |");
+            System.out.print("선택 > ");
+            String choice = sc.nextLine();
+    
+            switch (choice) {
+                case "1":
+                    EndAttractionRateView.addAttractionRate();
+                    break;
+                case "2":
+                	EndAttractionRateView.viewAttractionRatesById();
+                    break;
+                case "3":
+                	EndAttractionRateView.viewAttractionAverageScore();
+                    break;
+                case "4":
+                	EndAttractionRateView.updateAttractionRate();
+                    break;
+                case "5":
+                	EndAttractionRateView.deleteAttractionRate();
+                    break;
+                default:
+                    printError("잘못된 선택입니다.");
+            }
         }
-    }
-
-    private static void addRoomRate() {
-        System.out.print("사용자 ID를 입력해주세요: ");
-        String userId = sc.nextLine();
-        System.out.print("평점을 추가할 방 번호(room_id): ");
-        int roomId = Integer.parseInt(sc.nextLine());
-        System.out.print("평점(1-5): ");
-        int score = Integer.parseInt(sc.nextLine());
-        System.out.print("코멘트: ");
-        String comment = sc.nextLine();
-        roomRateController.addRoomRate(userId, roomId, score, comment);
-    }
-
-    private static void viewRoomRatesById() {
-        System.out.print("조회할 평점 ID(roomrate_id): ");
-        int roomRateId = Integer.parseInt(sc.nextLine());
-        roomRateController.viewRoomRates(roomRateId);
-    }
-
-
-    private static void updateRoomRate() {
-        System.out.print("수정할 평점 ID(roomrate_id): ");
-        int roomRateId = Integer.parseInt(sc.nextLine());
-        System.out.print("새 평점(1-5): ");
-        int score = Integer.parseInt(sc.nextLine());
-        System.out.print("새 코멘트: ");
-        String comment = sc.nextLine();
-        System.out.print("공개 여부(true/false): ");
-        boolean visible = Boolean.parseBoolean(sc.nextLine());
-        roomRateController.updateRoomRate(roomRateId, score, comment, visible);
-    }
-
-    private static void deleteRoomRate() {
-        System.out.print("삭제할 평점 ID(roomrate_id): ");
-        int roomRateId = Integer.parseInt(sc.nextLine());
-        roomRateController.deleteRoomRate(roomRateId);
-    }
-
-
-
-    private static void addAttractionRate() {
-        System.out.print("사용자 ID를 입력해주세요: ");
-        String userId = sc.nextLine();
-        System.out.print("평점을 추가할 관광지 번호(attraction_id): ");
-        int attractionId = Integer.parseInt(sc.nextLine());
-        System.out.print("평점(1-5): ");
-        int score = Integer.parseInt(sc.nextLine());
-        System.out.print("코멘트: ");
-        String comment = sc.nextLine();
-        attractionRateController.addAttractionRate(userId, attractionId, score, comment);
-    }
-
-    private static void viewAttractionRatesById() {
-        System.out.print("조회할 평점 ID(attractionrate_id): ");
-        int attractionRateId = Integer.parseInt(sc.nextLine());
-        attractionRateController.viewAttractionRateById(attractionRateId);
-    }
-
-    private static void viewAttractionAverageScore() {
-        System.out.print("조회할 관광지 번호(attraction_id): ");
-        int attractionId = Integer.parseInt(sc.nextLine());
-        attractionRateController.viewAttractionRateById(attractionId);
-    }
-
-    private static void updateAttractionRate() {
-        System.out.print("수정할 평점 ID(attractionrate_id): ");
-        int attractionRateId = Integer.parseInt(sc.nextLine());
-        System.out.print("새 평점(1-5): ");
-        int score = Integer.parseInt(sc.nextLine());
-        System.out.print("새 코멘트: ");
-        String comment = sc.nextLine();
-        attractionRateController.updateAttractionRate(attractionRateId, score, comment);
-    }
-
-    private static void deleteAttractionRate() {
-        System.out.print("삭제할 평점 ID(attractionrate_id): ");
-        int attractionRateId = Integer.parseInt(sc.nextLine());
-        attractionRateController.deleteAttractionRate(attractionRateId);
-    }
-
-
-//    private static void addAttraction() {
-//        System.out.print("관광지 이름: ");
-//        String name = sc.nextLine();
-//        System.out.print("주소: ");
-//        String address = sc.nextLine();
-//        System.out.print("입장 가능 여부(true/false): ");
-//        boolean entrance = Boolean.parseBoolean(sc.nextLine());
-//        System.out.print("사진 파일명: ");
-//        String photo = sc.nextLine();
-//        attractionController.addAttraction(name, address, entrance, photo);
-//    }
-
-//    private static void viewAttractionById() {
-//        System.out.print("조회할 관광지 ID(attraction_id): ");
-//        int attractionId = Integer.parseInt(sc.nextLine());
-//        try {
-//            Attraction attraction = attractionController.selectAttractionById(attractionId);
-//            if (attraction != null) {
-//                System.out.println("----------------------------------------------------------");
-//                System.out.printf("| %-11s | %-20s | %-50s | %-8s |\n", "ID", "이름", "주소", "입장 여부");
-//                System.out.println("----------------------------------------------------------");
-//                System.out.printf("| %-11d | %-20s | %-50s | %-8s |\n",
-//                    attraction.getAttractionId(), attraction.getAttractionName(), attraction.getAddress(),
-//                    attraction.isEntrance() ? "가능" : "불가");
-//                System.out.println("----------------------------------------------------------");
-//            } else {
-//                printError("해당 관광지가 존재하지 않습니다.");
-//            }
-//        } catch (Exception e) {
-//            printError(e.getMessage());
-//        }
-//    }
-//
-//    private static void updateAttraction() {
-//        System.out.print("수정할 관광지 ID(attraction_id): ");
-//        int attractionId = Integer.parseInt(sc.nextLine());
-//        System.out.print("새 이름: ");
-//        String name = sc.nextLine();
-//        System.out.print("새 주소: ");
-//        String address = sc.nextLine();
-//        System.out.print("새 입장 가능 여부(true/false): ");
-//        boolean entrance = Boolean.parseBoolean(sc.nextLine());
-//        System.out.print("새 사진 파일명: ");
-//        String photo = sc.nextLine();
-//        attractionController.updateAttraction(attractionId, name, address, entrance, photo);
-//    }
-//
-//    private static void deleteAttraction() {
-//        System.out.print("삭제할 관광지 ID(attraction_id): ");
-//        int attractionId = Integer.parseInt(sc.nextLine());
-//        attractionController.deleteAttraction(attractionId);
-//    }
+     }
 
     public static void printError(String message) {
         System.out.println("오류: " + message);

@@ -133,14 +133,14 @@ public class UserDaoImpl implements UserDao {
 		}
 		Connection con = null;
 		PreparedStatement ps = null;
-		String sql = "update user set email = ?, password = ?, name = ? where user_id = ?";
+		String sql = "update user set email = ?, password = ?, phone = ? where user_id = ?";
 		
 		try {
 			con = DBManager.getConnection();
 			ps = con.prepareStatement(sql);
 			ps.setString(1, user.getEmail());
 			ps.setString(2, user.getPassword());
-			ps.setString(3, user.getName());
+			ps.setString(3, user.getPhone());
 			ps.setInt(4, session.getUserId());
 			
 			return ps.executeUpdate();

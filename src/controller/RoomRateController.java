@@ -6,6 +6,7 @@ import java.util.List;
 import model.dto.RoomRate;
 import model.service.RoomRateService;
 import model.service.RoomRateServiceImpl;
+import view.MenuView;
 
 public class RoomRateController {
    private static RoomRateService roomRateService = new RoomRateServiceImpl();
@@ -37,16 +38,14 @@ public class RoomRateController {
         try {
             RoomRate roomRate = new RoomRate(roomRateId, score, comment, visible, 0);
             roomRateService.updateRoomRate(roomRate);
-            System.out.println("방 평점이 수정되었습니다.");
         } catch (SQLException e) {
-            // MenuView.printError(e.getMessage());
+            MenuView.printError(e.getMessage());
         }
     }
 
     public static void deleteRoomRate(int roomRateId) {
         try {
             roomRateService.deleteRoomRate(roomRateId);
-            System.out.println("방 평점이 삭제되었습니다.");
         } catch (SQLException e) {
             // MenuView.printError(e.getMessage());
         }
