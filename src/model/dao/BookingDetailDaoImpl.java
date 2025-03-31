@@ -82,16 +82,15 @@ public abstract class BookingDetailDaoImpl implements BookingDetailDao {
 
         try {
             con = DBManager.getConnection();
-            pstmt = con.prepareStatement("INSERT INTO BOOKING_DETAIL VALUES(?,?,?,?,?,?)");
+            pstmt = con.prepareStatement("INSERT INTO BOOKING_DETAIL VALUES(?,?,?,?,?)");
+
+            pstmt.setInt(1, bookingDetail.getGuestCount());
+            pstmt.setInt(2, bookingDetail.getRoomCount());
+            pstmt.setInt(3, bookingDetail.getTotalPrice());
+            pstmt.setDate(4, bookingDetail.getCheckInDate());
+            pstmt.setDate(5, bookingDetail.getCheckOutDate());
+
             result = pstmt.executeUpdate();
-
-            pstmt.setInt(1, bookingDetail.getBookingDetailId());
-            pstmt.setInt(2, bookingDetail.getGuestCount());
-            pstmt.setInt(3, bookingDetail.getRoomCount());
-            pstmt.setInt(4, bookingDetail.getTotalPrice());
-            pstmt.setDate(5, bookingDetail.getCheckInDate());
-            pstmt.setDate(6, bookingDetail.getCheckOutDate());
-
             if(result == 0){
                 System.out.println("예약 상세가 등록되지 않았습니다. 다시 시도해주세요.");
             }else{

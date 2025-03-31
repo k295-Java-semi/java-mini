@@ -293,6 +293,7 @@ public class MenuView {
 				}
 
 				Session session = userController.getInstance().getSession();
+				System.out.println(session);
 				System.out.print("인원수를 입력해주세요: ");
 				int guestCount = Integer.parseInt(sc.nextLine());
 				System.out.print("예약일을 입력해주세요(YYYY-MM-DD): ");
