@@ -17,10 +17,6 @@ public class BookingServiceImpl implements BookingService {
 	public BookingServiceImpl() {
 		this.bookingDao = bookingDao;
 	}
-	
-	public static BookingService getInstance() {
-		return instance;
-	}
 
 	@Override
 	public void addBooking(Booking booking, List<BookingDetail> bookingDetails) throws AddException, SQLException, java.sql.SQLException {
