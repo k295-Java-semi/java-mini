@@ -39,14 +39,15 @@ public class RoomController {
 	 *
 	 * @return
 	 */
-	public Room getRoomById(int roomId) {
+	public List<Room> getRoomById(int roomId) {
 		try {
-			Room room = roomService.getRoom(roomId);
-			SuccessView.selectByNoPrint(room);
+			List<Room> room = roomService.getRoom(roomId);
+			SuccessView.selectPrint(room);
+			return room; // 메서드 내에서 반환값을 명시적으로 지정
 		} catch (SearchWrongException e) {
 			FailView.errorMessage(e.getMessage());
 		}
-		return null;
+		return new ArrayList<>(); // null 대신 빈 리스트 반환
 	}
 	
 	/**

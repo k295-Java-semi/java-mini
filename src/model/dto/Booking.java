@@ -1,39 +1,46 @@
 package model.dto;
 
+import model.dao.BookingDetailDao;
+import model.dao.BookingDetailDaoImpl;
+
 import java.sql.Date;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Booking {
-    private int guestCount;
     private int bookingId;
     private int userId;
     private int roomId;
     private Date paymentDate;
-    private int bookingDetailId;
 
-    public Booking() {}
 
-    public Booking(int bookingId, int userId, int roomId, Date paymentDate, int bookingDetailId) {
+    public List<BookingDetail> bookingDetailList = new ArrayList<>();
+
+    public Booking() {
+
+    }
+
+    public Booking(int bookingId, int userId, int roomId, Date paymentDate) {
         this.bookingId = bookingId;
         this.userId = userId;
         this.roomId = roomId;
         this.paymentDate = paymentDate;
-        this.bookingDetailId = bookingDetailId;
     }
 
-    public Booking(int i, String userId, int roomId) {
-        this.bookingId = i;
-        this.userId = Integer.parseInt(userId);
-        this.roomId = roomId;
-    }
-
-    public Booking(int userId, int guestCount, Date paymentDate) {
+    public Booking(int userId, int roomId, Date paymentDate) {
         this.userId = userId;
-        this.guestCount = guestCount;
+        this.roomId = roomId;
         this.paymentDate = paymentDate;
     }
 
-    // Getters, Setters, toString
+    public Booking(int bookingId, int userId, int roomId, LocalTime now) {
+        this.bookingId = bookingId;
+        this.userId = userId;
+        this.roomId = roomId;
+    }
 
+    // Getters, Setters, toString
 
     public int getBookingId() {
         return bookingId;
@@ -67,14 +74,6 @@ public class Booking {
         this.paymentDate = paymentDate;
     }
 
-    public int getBookingDetailId() {
-        return bookingDetailId;
-    }
-
-    public void setBookingDetailId(int bookingDetailId) {
-        this.bookingDetailId = bookingDetailId;
-    }
-
     @Override
     public String toString() {
         return "Booking{" +
@@ -82,7 +81,18 @@ public class Booking {
                 ", userId='" + userId + '\'' +
                 ", roomId=" + roomId + '\'' +
                 ", paymentDate=" + paymentDate + '\'' +
-                ", bookingDetailId=" + bookingDetailId +
-                '}';
+        '}';
     }
+
+    public void addBookingDetail(BookingDetail bookingDetail) {
+        BookingDetailDao bookingDetailDao = new BookingDetailDaoImpl();
+        bookingDetailDao.saveBookingDetail(bookingDetail);
+    }
+
+    public List<BookingDetail> getBookingDetail() {
+        BookingDetailDao bookingDetailDao = new BookingDetailDaoImpl();
+        return bookingDetailDao.findBookingDetailById(this.bookingId);
+    }
+
+    public void setBookingDetail(List<BookingDetail> bookingDetail) {this.bookingDetailList = bookingDetail;}
 }

@@ -3,11 +3,7 @@ package model.service;
 import java.util.List;
 
 import model.dto.Room;
-import pension.exception.AddException;
 import pension.exception.DMLException;
-import pension.exception.DeleteException;
-import pension.exception.FindException;
-import pension.exception.ModifyException;
 import pension.exception.NotFoundException;
 import pension.exception.SearchWrongException;
 
@@ -20,7 +16,7 @@ public interface RoomService {
     /**
 	 * 특정 방 조회
 	 */
-	Room getRoom(int roomId) throws SearchWrongException;
+	List<Room> getRoom(int roomId) throws SearchWrongException;
 	
 	/**
 	 * 예약 가능한 방만 조회
