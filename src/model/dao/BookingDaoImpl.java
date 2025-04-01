@@ -316,7 +316,7 @@ public class BookingDaoImpl implements BookingDao {
 
         try {
             con = DBManager.getConnection();
-            pstmt = con.prepareStatement("DELETE FROM BOOKING WHERE BOOKING_ID=?");
+            pstmt = con.prepareStatement("DELETE FROM BOOKING_DETAIL WHERE BOOKING_ID=?");
 
             pstmt.setInt(1, bookingNo);
 
@@ -325,12 +325,20 @@ public class BookingDaoImpl implements BookingDao {
             if (result == 0) {
                 System.out.println("취소되지 않았습니다. 예약 번호를 다시 확인해주세요!");
             }else{
-                System.out.println("예약이 취소되었습니다. 다시 만나길!");
+                pstmt = con.prepareStatement("DELETE FROM BOOKING WHERE BOOKING_ID=?");
+                pstmt.setInt(1, bookingNo);
+                result = pstmt.executeUpdate();
+                if(result == 0){
+                    System.out.println("취소되지 않았습니다. 예약 번호를 다시 확인해주세요!");
+                }else{
+                    System.out.println("예약이 취소되었습니다. 다시 만나길!");
+                }
+
             }
 
 
         }catch(Exception e) {
-
+            e.printStackTrace();
         }finally {
             DBManager.close(con, pstmt);
         }

@@ -126,16 +126,12 @@ public class BookingDetailDaoImpl implements BookingDetailDao {
     public int updateBookingDetail(BookingDetail bookingDetail) {
         Connection con = null;
         PreparedStatement pstmt = null;
-        ResultSet rs = null;
 
         int result = 0;
 
         try {
             con = DBManager.getConnection();
             pstmt = con.prepareStatement("UPDATE BOOKING_DETAIL SET GUEST_COUNT=?, ROOM_COUNT=?, TOTAL_PRICE=?, CHECK_IN_DATE=?, CHECK_OUT_DATE=? WHERE BOOKING_DETAIL_ID=?");
-            rs = pstmt.executeQuery();
-
-            result = pstmt.executeUpdate();
 
             pstmt.setInt(1, bookingDetail.getGuestCount());
             pstmt.setInt(2, bookingDetail.getRoomCount());
@@ -143,6 +139,8 @@ public class BookingDetailDaoImpl implements BookingDetailDao {
             pstmt.setDate(4, bookingDetail.getCheckInDate());
             pstmt.setDate(5, bookingDetail.getCheckOutDate());
             pstmt.setInt(6, bookingDetail.getBookingDetailId());
+
+            result = pstmt.executeUpdate();
 
             if(result == 0){
                 System.out.println("수정되지 않았습니다. 다시 시도해주세요.");
@@ -153,7 +151,7 @@ public class BookingDetailDaoImpl implements BookingDetailDao {
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            DBManager.close(con, pstmt, rs);
+            DBManager.close(con, pstmt);
         }
         return result;
     }

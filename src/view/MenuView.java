@@ -419,7 +419,6 @@ public class MenuView {
 				}
 				List<Room> rooms;
 				for (BookingDetail detail : booking.getBookingDetail()) {
-					System.out.println(detail);
 					rooms = roomController.getRoomById(booking.getRoomId());
 					if (rooms == null || rooms.isEmpty()) {
 						System.out.println("유효하지 않은 방 번호입니다. (Room ID: " + detail.getRoomId() + ")");
@@ -500,7 +499,7 @@ public class MenuView {
 				bookingController.deleteBooking(bookingDetail.getBookingId());
 				break;
 			case "3":
-				deleteBookingDetail(bookingDetailId, null);
+				deleteBookingDetail(bookingDetailId, booking);
 				break;
 			case "0":
 				break;
@@ -541,7 +540,7 @@ public class MenuView {
 			System.out.printf("| %-8s | %-15d |\n", "인원수", details.get(0).getGuestCount());
 			System.out.printf("| %-8s | %,15d원 |\n", "총 가격", (int) details.get(0).getTotalPrice());
 			System.out.println("---------------------------------------");
-			System.out.println("1. 예약 수정 | 2. 예약 취소 | 3. 예약 상세 삭제 | 0. 나가기");
+			System.out.println("1. 예약 수정 | 2. 예약 취소 | 0. 나가기");
 			System.out.print("선택 > ");
 			String choice = sc.nextLine();
 
@@ -551,9 +550,6 @@ public class MenuView {
 					break;
 				case "2":
 					bookingController.deleteBooking(bookingDetails.get(0).getBookingDetailId());
-					break;
-				case "3":
-					deleteBookingDetail(bookingDetails.get(0).getBookingDetailId(), Booking);
 					break;
 				case "0":
 					break;
