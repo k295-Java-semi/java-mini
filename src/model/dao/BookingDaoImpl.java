@@ -12,22 +12,9 @@ import pension.exception.SQLException;
 import util.DBManager;
 
 public class BookingDaoImpl implements BookingDao {
-<<<<<<< HEAD
-	
-	private static BookingDao instance = new BookingDaoImpl();
-	private UserDao userDao = UserDaoImpl.getInstance();
-	
-	private BookingDaoImpl() {}
-	
-	public static BookingDao getInstance() {
-		return instance;
-	}
-	
-=======
 
     private BookingDetail bookingDetail;
 
->>>>>>> feat/book
     @Override
     public List<Booking> selectAll() {
         Connection con = null;
@@ -264,22 +251,6 @@ public class BookingDaoImpl implements BookingDao {
         int result = 0;
 
         try {
-<<<<<<< HEAD
-            con = DBManager.getConnection();
-            pstmt = con.prepareStatement("INSERT INTO BOOKING(user_id, room_id, payment_date) VALUES(?,?,?)");
-
-
-            pstmt.setInt(1, booking.getUserId());
-            pstmt.setInt(2, booking.getRoomId());
-            pstmt.setDate(3, booking.getPaymentDate());
-
-            result = pstmt.executeUpdate();
-
-            if(result == 0){
-                System.out.println("등록되지 않았습니다. 다시 시도해주세요.");
-            }else{
-                System.out.println("예약이 완료되었습니다. 상세내역은 마이페이지에서 확인해주세요!");
-=======
             pstmt = con.prepareStatement(
                     "INSERT INTO BOOKING_DETAIL(guest_count, room_count, total_price, check_in_date, check_out_date, payment_date, booking_id) VALUES(?, ?, ?, ?, ?, ?, ?)"
             );
@@ -293,7 +264,6 @@ public class BookingDaoImpl implements BookingDao {
                 pstmt.setDate(6, bookingDetails.get(j).getPaymentDate());
                 pstmt.setInt(7, generatedBookingId);
                 j++;
->>>>>>> feat/book
             }
 
             result = pstmt.executeUpdate();

@@ -1,12 +1,12 @@
 package model.dto;
 
-import model.dao.BookingDetailDao;
-import model.dao.BookingDetailDaoImpl;
-
 import java.sql.Date;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import model.dao.BookingDetailDao;
+import model.dao.BookingDetailDaoImpl;
 
 public class Booking {
     private int guestCount;
@@ -45,12 +45,6 @@ public class Booking {
         this.bookingId = i;
         this.userId = Integer.parseInt(userId);
         this.roomId = roomId;
-    }
-
-    public Booking(int userId, int guestCount, Date paymentDate) {
-        this.userId = userId;
-        this.guestCount = guestCount;
-        this.paymentDate = paymentDate;
     }
 
     // Getters, Setters, toString

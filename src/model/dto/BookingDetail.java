@@ -10,15 +10,8 @@ public class    BookingDetail {
     private Date paymentDate;
     private Date checkInDate;
     private Date checkOutDate;
-<<<<<<< HEAD
-    private User user;
-    private Room room;
-
-
-=======
     private int bookingId;
     private int roomId;
->>>>>>> feat/book
 
     public BookingDetail() {}
 
@@ -95,24 +88,6 @@ public class    BookingDetail {
                 '}';
     }
 
-<<<<<<< HEAD
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-=======
     public Date getPaymentDate() {
         return paymentDate;
     }
@@ -134,5 +109,4 @@ public class    BookingDetail {
     }
 
     public void setRoomId(int roomId) {this.roomId = roomId;}
->>>>>>> feat/book
 }
