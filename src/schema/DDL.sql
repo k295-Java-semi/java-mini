@@ -17,10 +17,11 @@ CREATE TABLE `room` (
     `room_id` INT NOT NULL PRIMARY KEY auto_increment,
     `room_number` VARCHAR(10)  NOT NULL,
     `type` ENUM('A', 'B', 'C') NOT NULL DEFAULT 'A',
-    `price` DECIMAL(10,2) NULL,
+    `price` int NULL,
     `capacity` INT NULL,
     `size` VARCHAR(10) NULL,
-    `description` VARCHAR(50) NULL
+    `description` VARCHAR(50) NULL,
+     `available` ENUM('Y', 'N') not NULL DEFAULT 'Y'
 );
 
 -- booking_detail 테이블
@@ -30,7 +31,10 @@ CREATE TABLE `booking_detail` (
     `room_count` INT not NULL,
     `total_price` int not NULL,
     `check_in_date` DATE not NULL,
-    `check_out_date` DATE not NULL
+    `check_out_date` DATE not NULL,
+    `payment_date` DATE not NULL,
+    `booking_id` INT NOT NULL,
+    foreign key(`booking_id`) references `booking`(`booking_id`)
 );
 
 -- booking 테이블
@@ -39,21 +43,8 @@ CREATE TABLE `booking` (
     `user_id` INT NOT NULL,
     `room_id` INT NOT NULL,
     `payment_date` DATE NOT NULL DEFAULT (curdate()),
-    `booking_detail_id` INT NOT NULL,
     FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-    FOREIGN KEY (`room_id`) REFERENCES `room` (`room_id`),
-    FOREIGN KEY (`booking_detail_id`) REFERENCES `booking_detail` (`booking_detail_id`)
-);
-
-
--- state 테이블
-CREATE TABLE `state` (
-    `state_id` INT NOT NULL PRIMARY KEY auto_increment,
-    `available` ENUM('Y', 'N') not NULL DEFAULT 'N',
-    `room_id` INT NOT NULL,
-    `booking_id` INT NOT NULL,
-    FOREIGN KEY (`room_id`) REFERENCES `room` (`room_id`),
-    FOREIGN KEY (`booking_id`) REFERENCES `booking` (`booking_id`)
+    FOREIGN KEY (`room_id`) REFERENCES `room` (`room_id`)
 );
 
 
@@ -108,35 +99,37 @@ select * from user;
 
 -- room 테이블 (3개 삽입)
 INSERT INTO room (`room_number`, `type`, `price`, `capacity`, `size`, `description`) VALUES
-('101', 'A', 100000, 2, '20m²', '바다가 보이는 방'),
-('102', 'B', 80000, 4, '25m²', '가족용 방'),
-('103', 'C', 60000, 6, '30m²', '단체 이용 가능');
+('101', 'A', 100000, 2, '20', '바다가 보이는 방'),
+('102', 'B', 80000, 4, '25', '가족용 방'),
+('103', 'C', 60000, 6, '30', '단체 이용 가능');
 
 select * from room;
 
 -- booking_detail 테이블 (3개 삽입)
-INSERT INTO booking_detail (`guest_count`, `room_count`, `total_price`, `check_in_date`, `check_out_date`) VALUES
-(2, 1, 100000.00, '2024-04-01', '2024-04-03'),
-(4, 1, 80000.00, '2024-04-05', '2024-04-07'),
-(6, 1, 60000.00, '2024-04-10', '2024-04-12');
+INSERT INTO booking_detail (`guest_count`, `room_count`, `total_price`, `check_in_date`, `check_out_date`, `payment_date`, `booking_id`) VALUES
+(2, 1, 100000.00, '2024-04-01', '2024-04-03', now(), 1),
+(4, 1, 80000.00, '2024-04-05', '2024-04-07', now(), 2),
+(6, 1, 60000.00, '2024-04-10', '2024-04-12', now(), 3);
 
-select * from booking_detail;
+
+select * from booking where user_id = 1;
+select * from booking_detail where booking_id = (1);
+select * from booking_detail where booking_id = (4);
+select * from booking_detail where booking_id = (6);
 
 -- booking 테이블 (3개 삽입) (user_id와 room_id는 위에 삽입된 데이터를 기반으로 설정)
-INSERT INTO booking (`user_id`, `room_id`, `payment_date`, `booking_detail_id`) VALUES
-(1, 1, CURDATE(), 1),
-(2, 2, CURDATE(), 2),
-(3, 3, CURDATE(), 3);
+INSERT INTO booking (`user_id`, `room_id`, `payment_date`) VALUES
+(1, 1, CURDATE()),
+(2, 2, CURDATE()),
+(3, 3, CURDATE());
+
+
 
 select * from booking;
-
 -- state 테이블 (3개 삽입) (방이 예약됨을 표시)
-INSERT INTO state(`available`, `room_id`, `booking_id`) VALUES
-('N', 1, 1),
-('N', 2, 2),
-('N', 3, 3);
+commit;
 
-select  * from state;
+
 
 -- room_rate 테이블 (3개 삽입) (방 평가)
 INSERT INTO `room_rate` (`room_score`, `comment`, `visible`, `room_id`) VALUES
