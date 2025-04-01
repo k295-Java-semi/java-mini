@@ -44,6 +44,6 @@ public interface RoomDao {
      * 특정 방 정보 메서드
      * ( 예약 가능한 방? 을 보여줘야 할듯?)
      */
-    Room roomSelectByNo(int roomId) throws SearchWrongException;
+    List<Room> roomSelectByNo(int roomId) throws SearchWrongException;
     
 }

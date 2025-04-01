@@ -18,8 +18,8 @@ public class BookingDetailServiceImpl implements BookingDetailService {
     }
 
     @Override
-    public BookingDetail getBookingDetailById(int id) {
-        return BookingDetailDao.findBookingDetailById();
+    public List<BookingDetail> getBookingDetailById(int id) {
+        return BookingDetailDao.findBookingDetailById(id);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class BookingDetailServiceImpl implements BookingDetailService {
     }
 
     @Override
-    public int deleteBookingDetail(int id) {
-        return BookingDetailDao.deleteBookingDetail();
+    public int deleteBookingDetail(int bookingDetailId) {
+        return BookingDetailDao.deleteBookingDetail(bookingDetailId);
     }
 }

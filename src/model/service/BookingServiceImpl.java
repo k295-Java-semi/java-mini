@@ -5,16 +5,18 @@ import java.util.List;
 import model.dao.BookingDao;
 import model.dao.BookingDaoImpl;
 import model.dto.Booking;
-import pension.exception.AddException;
-import pension.exception.DeleteException;
-import pension.exception.FindException;
-import pension.exception.ModifyException;
+import model.dto.BookingDetail;
+import pension.exception.*;
 
 public class BookingServiceImpl implements BookingService {
+<<<<<<< HEAD
 	
 	private static BookingService instance = new BookingServiceImpl();
 	private BookingDao bookingDao = BookingDaoImpl.getInstance();
 //	private BookingDao bookingDao;
+=======
+	private BookingDao bookingDao;
+>>>>>>> feat/book
 
 	public BookingServiceImpl() {
 		this.bookingDao = bookingDao;
@@ -25,8 +27,8 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	@Override
-	public void addBooking(Booking booking) throws AddException {
-		bookingDao.insert(booking);
+	public void addBooking(Booking booking, List<BookingDetail> bookingDetails) throws AddException, SQLException, java.sql.SQLException {
+		bookingDao.insert(booking, bookingDetails);
 	}
 
 	@Override

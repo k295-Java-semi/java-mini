@@ -9,7 +9,7 @@ public interface BookingDetailService {
     public List<BookingDetail> getAllBookingDetails();
 
     //예약 상세 번호를 통한 조회
-    public BookingDetail getBookingDetailById(int id);
+    public List<BookingDetail> getBookingDetailById(int id);
 
     //예약 상세 생성
     void addBookingDetail(BookingDetail bookingDetail);

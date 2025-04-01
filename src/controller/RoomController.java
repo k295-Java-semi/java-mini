@@ -8,7 +8,6 @@ import model.service.RoomServiceImpl;
 import pension.exception.DMLException;
 import pension.exception.NotFoundException;
 import pension.exception.SearchWrongException;
-import session.Session;
 import view.FailView;
 import view.SuccessView;
 
@@ -37,16 +36,28 @@ public class RoomController {
 	
 	/**
 	 * 특정 방 정보 조회
+<<<<<<< HEAD
 	 * @return 
 	 **/
 	public Room getRoomById(int roomId) {
 		try {
 			Room room = roomService.getRoom(roomId);
 			return room;
+=======
+	 *
+	 * @return
+	 */
+	public List<Room> getRoomById(int roomId) {
+		try {
+			List<Room> room = roomService.getRoom(roomId);
+			SuccessView.selectPrint(room);
+			return room; // 메서드 내에서 반환값을 명시적으로 지정
+>>>>>>> feat/book
 		} catch (SearchWrongException e) {
 			FailView.errorMessage(e.getMessage());
 			return null;
 		}
+		return new ArrayList<>(); // null 대신 빈 리스트 반환
 	}
 	
 	/**

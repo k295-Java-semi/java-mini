@@ -2,28 +2,37 @@ package model.dto;
 
 import java.sql.Date;
 
-public class BookingDetail {
+public class    BookingDetail {
     private int bookingDetailId;
     private int guestCount;
     private int roomCount;
     private int totalPrice;
+    private Date paymentDate;
     private Date checkInDate;
     private Date checkOutDate;
+<<<<<<< HEAD
     private User user;
     private Room room;
 
 
+=======
+    private int bookingId;
+    private int roomId;
+>>>>>>> feat/book
 
     public BookingDetail() {}
 
-    public BookingDetail(int bookingDetailId, int guestCount, int roomCount, int totalPrice, Date checkInDate, Date checkOutDate) {
+    public BookingDetail(int bookingDetailId, int guestCount, int roomCount, int totalPrice, Date checkInDate, Date checkOutDate, Date paymentDate, int bookingId) {
         this.bookingDetailId = bookingDetailId;
         this.guestCount = guestCount;
         this.roomCount = roomCount;
         this.totalPrice = totalPrice;
+        this.paymentDate = paymentDate;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
+        this.bookingId = bookingId;
     }
+
 
     public int getBookingDetailId() {
         return bookingDetailId;
@@ -82,9 +91,11 @@ public class BookingDetail {
                 ", totalPrice=" + totalPrice +
                 ", checkInDate=" + checkInDate +
                 ", checkOutDate=" + checkOutDate +
+                ", bookingId=" + bookingId +
                 '}';
     }
 
+<<<<<<< HEAD
     public User getUser() {
         return user;
     }
@@ -101,4 +112,27 @@ public class BookingDetail {
         this.room = room;
     }
 
+=======
+    public Date getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public int getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(int bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {this.roomId = roomId;}
+>>>>>>> feat/book
 }

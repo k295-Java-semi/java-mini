@@ -99,11 +99,12 @@ public class RoomDaoImpl implements RoomDao{
 	 * Query : select * from room where room_id = ?
 	 */
 	@Override
-	public Room roomSelectByNo(int roomId) throws SearchWrongException {
+	public List<Room> roomSelectByNo(int roomId) throws SearchWrongException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Room room = null;
+		List<Room> list = new ArrayList<>();
 		String sql = "select * from room where room_id = ?";
 		
 		try {
@@ -112,10 +113,10 @@ public class RoomDaoImpl implements RoomDao{
 			ps.setInt(1, roomId);
 			
 			rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				room = new Room(
 		                rs.getInt(roomId),
-		                rs.getString("room_name"),
+		                rs.getString("room_number"),
 		                rs.getString("type"),
 		                rs.getInt("price"),             
 		                rs.getInt("capacity"),
@@ -123,6 +124,7 @@ public class RoomDaoImpl implements RoomDao{
 		                rs.getString("description"),      
 		                rs.getBoolean("available")         
 		            );
+				list.add(room);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -131,7 +133,7 @@ public class RoomDaoImpl implements RoomDao{
 			DBManager.close(con, ps, rs);
 		}
 		
-		return room;
+		return list;
 	}
 	
 

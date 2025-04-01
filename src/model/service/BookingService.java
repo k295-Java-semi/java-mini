@@ -4,10 +4,8 @@ package model.service;
 import java.util.List;
 
 import model.dto.Booking;
-import pension.exception.AddException;
-import pension.exception.DeleteException;
-import pension.exception.FindException;
-import pension.exception.ModifyException;
+import model.dto.BookingDetail;
+import pension.exception.*;
 
 public interface BookingService {
     // 모든 예약 조회
@@ -17,7 +15,7 @@ public interface BookingService {
 	Booking getBooking(int bookingNo) throws FindException;
 
     // 예약 추가
-    void addBooking(Booking booking) throws AddException;
+    void addBooking(Booking booking, List<BookingDetail> bookingDetails) throws AddException, SQLException, java.sql.SQLException;
 
     // 예약 수정
     void modifyBooking(Booking booking) throws ModifyException;

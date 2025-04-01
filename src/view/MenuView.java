@@ -1,16 +1,13 @@
 package view;
 
 import controller.*;
-import model.dao.RoomRateDaoImpl;
 import model.dto.*;
-import pension.exception.NotFoundException;
 import session.Session;
 import util.Design;
 
 import java.sql.Date;
 import java.text.NumberFormat;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class MenuView {
     private static Scanner sc = new Scanner(System.in);
@@ -21,11 +18,19 @@ public class MenuView {
     private static AttractionController attractionController = new AttractionController();
     private static RoomRateController roomRateController = new RoomRateController();
     private static AttractionRateController attractionRateController = new AttractionRateController();
+	private static BookingDetailController bookingDetailController = new BookingDetailController();
 
+<<<<<<< HEAD
     public static void main(String[] args) {
         System.out.println("=======================================================");
         System.out.println("라비에뜨 펜션 (La Viette,  ‘작은 삶의 기쁨’) 에 온 것을 환영합니다.");
         System.out.println("=======================================================");
+=======
+	public static void main(String[] args) {
+        System.out.println("==============================================");
+        System.out.println("\"라비에뜨 펜션 (La Viette,  ‘작은 삶의 기쁨’) 에 온 것을 환영합니다\"");
+        System.out.println("==============================================");
+>>>>>>> feat/book
         
         boolean loggedIn = false;
         
@@ -199,10 +204,17 @@ public class MenuView {
     		case "1":
     			viewRooms();
     			break;
+<<<<<<< HEAD
     		case "2":
     			makeReservation();
     			break;
     		case "3":
+=======
+				case "2":
+					makeReservation();
+					break;
+				case "3":
+>>>>>>> feat/book
     			viewAttractions();
     			break;
     		case "4":
@@ -280,6 +292,7 @@ public class MenuView {
 			System.out.print("선택 > ");
 			String choice = sc.nextLine();
 
+<<<<<<< HEAD
 			if ("1".equals(choice)) {
 				System.out.print("예약할 방 번호를 입력해주세요: ");
 				String roomNumber = sc.nextLine();
@@ -310,8 +323,78 @@ public class MenuView {
 		}
 	}
     
+=======
+>>>>>>> feat/book
 
-    private static void viewAttractions() {
+	private static void makeReservation() {
+		try {
+			List<Room> rooms = roomController.getAllRooms();
+			System.out.println("예약 가능한 방 목록:");
+			System.out.println("----------------------------------------------------------");
+			System.out.printf("| %-7s | %-5s | %-4s | %-9s | %-7s | %-7s |\n",
+					"방 번호", "타입", "크기", "가격", "인원 수", "상태");
+			System.out.println("----------------------------------------------------------");
+			for (Room room : rooms) {
+				String status = room.isAvailable() ? "예약 가능" : "예약 중";
+				System.out.printf("| %-7s | %-5s | %-4s | %,9d | %-7d | %-7s |\n",
+						room.getRoomNumber(), room.getType(), room.getSize(), (int) room.getPrice(), room.getCapacity(), status);
+			}
+			System.out.println("----------------------------------------------------------");
+			System.out.println("1. 예약하기  |  2. 나가기");
+			System.out.print("선택 > ");
+			String choice = sc.nextLine();
+
+			if ("1".equals(choice)) {
+				System.out.print("예약할 방 번호를 입력해주세요: ");
+				String roomNumber = sc.nextLine();
+				Room selectedRoom = rooms.stream()
+						.filter(r -> r.getRoomNumber().equals(roomNumber) && r.isAvailable())
+						.findFirst()
+						.orElse(null);
+				if (selectedRoom == null) {
+					System.out.println("유효하지 않거나 예약 불가능한 방입니다.");
+					return;
+				}
+
+				System.out.print("예약할 방 개수를 입력해주세요: ");
+				int roomCount = Integer.parseInt(sc.nextLine());
+				System.out.print("인원수를 입력해주세요: ");
+				int guestCount = Integer.parseInt(sc.nextLine());
+				System.out.print("결제일을 입력해주세요(YYYY-MM-DD): ");
+				Date paymentDate = Date.valueOf(sc.nextLine());
+				System.out.print("체크인 날짜를 입력해주세요(YYYY-MM-DD): ");
+				Date checkInDate = Date.valueOf(sc.nextLine());
+				System.out.print("체크아웃 날짜를 입력해주세요(YYYY-MM-DD): ");
+				Date checkOutDate = Date.valueOf(sc.nextLine());
+
+				Session session = UserController.getInstance().getSession();
+				int userId = session.getUserId();
+
+				// 예약 상세 정보 생성
+				Booking booking = new Booking(userId, selectedRoom.getRoomId(), paymentDate);
+				List<BookingDetail> bookingDetailList = new ArrayList<>();
+				for (int i = 0; i <  roomCount; i++) {
+					BookingDetail bookingDetail = new BookingDetail();
+					bookingDetail.setGuestCount(guestCount);
+					bookingDetail.setRoomCount(1); // 예: 방 하나 예약
+					bookingDetail.setTotalPrice((int) selectedRoom.getPrice() * bookingDetail.getRoomCount());
+					bookingDetail.setPaymentDate(paymentDate);
+					bookingDetail.setCheckInDate(checkInDate);
+					bookingDetail.setCheckOutDate(checkOutDate);
+					
+					bookingDetailList.add(bookingDetail);
+					
+				}
+				bookingController.addBooking(booking, bookingDetailList);
+
+			}
+		} catch (Exception e) {
+			System.out.println("오류 발생: " + e.getMessage());
+		}
+	}
+
+
+	private static void viewAttractions() {
         try {
             List<Attraction> attractions = attractionController.selectAllAttractions();
             System.out.println("관광지 목록:");
@@ -333,6 +416,7 @@ public class MenuView {
         System.out.println("오시는 길: 라비에뜨 펜션 - 대부도 어딘가 (임시 주소)");
     }
 
+<<<<<<< HEAD
     private static void viewMyPage() {
     	while(true) {
     		Session session = userController.getInstance().getSession();
@@ -439,6 +523,212 @@ public class MenuView {
 					break;
 				case "3":
 					deleteBookingDetail(booking.getBookingDetailId(), Booking);
+=======
+	private static void viewMyPage() {
+		while (true) {
+			Session session = userController.getInstance().getSession();
+			System.out.println("[마이페이지]");
+			System.out.println(userController.userInfo(session.getUserId()));
+			System.out.println("=======================================================================================");
+			System.out.println("1. 예약 내역 | 2. 회원 정보 수정 | 3. 방 평점 관리 | 4. 관광지 평점 관리 | 5. 회원탈퇴 | 6. 메뉴로");
+			System.out.println("=======================================================================================");
+			System.out.print("선택 > ");
+			String choice = sc.nextLine();
+
+			switch (choice) {
+				case "1":
+					viewBookingHistory();
+					break;
+				case "2":
+					EndUserView.updateUserInfo();
+					break;
+				case "3":
+					manageRoomRates();
+					break;
+				case "4":
+					manageAttractionRates();
+					break;
+
+				case "5":
+					EndUserView.deleteUser();
+					printLoginMenu();
+					return;
+
+				case "6":
+					printUserMenu();
+					break;
+
+				default:
+					printError("잘못된 선택입니다.");
+			}
+		}
+	}
+
+	private static void viewBookingHistory() {
+		try {
+			Session session = userController.getInstance().getSession();
+			int userId = session.getUserId();
+
+			// 다수의 예약 내역 조회
+			List<Booking> bookings = bookingController.getBookingByUserId(userId);
+
+			if (bookings.isEmpty()) {
+				System.out.println("예약 내역이 없습니다.");
+				return;
+			}
+
+			System.out.println("----------------------------------------------------------");
+			System.out.printf("| %-9s | %-7s | %-11s | %-12s | %-6s | %-6s | %-9s |\n",
+					"예약 번호", "방 번호", "체크인 날짜", "체크아웃 날짜", "인원수", "가격", "예약 상태");
+			System.out.println("----------------------------------------------------------");
+
+			int count = 0;
+
+			for (Booking booking : bookings) {
+
+				List<BookingDetail> details = bookingDetailController.getBookingDetailById(bookings.get(count).getBookingId());
+				if (details == null || details.isEmpty()) {
+					System.out.println("예약 상세 정보를 찾을 수 없습니다. (Booking ID: " + booking.getBookingId() + ")");
+					continue; // 다음 예약으로 건너뜁니다.
+				}
+				List<Room> rooms;
+				for (BookingDetail detail : booking.getBookingDetail()) {
+					System.out.println(detail);
+					rooms = roomController.getRoomById(booking.getRoomId());
+					if (rooms == null || rooms.isEmpty()) {
+						System.out.println("유효하지 않은 방 번호입니다. (Room ID: " + detail.getRoomId() + ")");
+						continue;
+					}
+					System.out.printf("| %-9s | %-7s | %-11s | %-12s | %-6s | %-6s | %-9s |\n",
+							detail.getBookingDetailId(), rooms.get(0).getRoomNumber(), detail.getCheckInDate(), detail.getCheckOutDate(),
+							detail.getGuestCount(), detail.getTotalPrice(), rooms.get(0).isAvailable() ? "예약 가능" : "예약 중");
+					System.out.println("--------------------------------------------");
+				}
+				count++;
+			}
+
+			System.out.println("--------------------------------------------");
+			System.out.println("0. 메뉴로 나가기 | 1. 예약 번호 상세 보기");
+			System.out.println("--------------------------------------------");
+			System.out.print("선택 > ");
+			String choice = sc.nextLine();
+
+			if ("1".equals(choice)) {
+				System.out.println("예약 상세 번호를 입력하세요.");
+				int bookngDetailId = Integer.parseInt(sc.nextLine());
+
+				viewBookingDetail(bookngDetailId);
+			}
+		} catch (Exception e) {
+			printError(e.getMessage());
+		}
+	}
+
+	private static void viewBookingDetail(int bookingDetailId) {
+		try {
+			// Fetch booking detail by ID
+			BookingDetail bookingDetail = bookingDetailController.getBookingDetailById(bookingDetailId)
+					.stream().findFirst().orElse(null);
+			System.out.println("ddd = "+ bookingDetail);
+			if (bookingDetail == null) {
+				printError("유효하지 않은 예약 상세 번호입니다.");
+				return;
+			}
+			Booking booking = bookingController.getBookingByBookingDetailId(bookingDetailId);
+
+			// Fetch the associated room information
+			Room room = roomController.getRoomById(booking.getRoomId())
+					.stream().findFirst().orElse(null);
+			System.out.println("ddd = "+ room);
+			if (room == null) {
+				printError("예약에 대한 방 정보를 찾을 수 없습니다.");
+				return;
+			}
+
+			// Display booking detail information
+			System.out.println("--------------------------------");
+			System.out.println("예약 상세:");
+			System.out.println("---------------------------------------");
+			System.out.printf("| %-8s | %-15s |\n", "방 번호", room.getRoomNumber());
+			System.out.printf("| %-8s | %-15s |\n", "체크인", bookingDetail.getCheckInDate());
+			System.out.printf("| %-8s | %-15s |\n", "체크아웃", bookingDetail.getCheckOutDate());
+			System.out.printf("| %-8s | %-15d |\n", "인원수", bookingDetail.getGuestCount());
+			System.out.printf("| %-8s | %,15d원 |\n", "총 가격", bookingDetail.getTotalPrice());
+			System.out.println("---------------------------------------");
+
+			// Provide options for further actions
+			System.out.println("1. 예약 수정 | 2. 예약 취소 | 3. 예약 상세 삭제 | 0. 나가기");
+			System.out.print("선택 > ");
+			String choice = sc.nextLine();
+
+			switch (choice) {
+				case "1":
+					System.out.print("새 체크인 날짜(YYYY-MM-DD): ");
+					bookingDetail.setCheckInDate(Date.valueOf(sc.nextLine()));
+					System.out.print("새 체크아웃 날짜(YYYY-MM-DD): ");
+					bookingDetail.setCheckOutDate(Date.valueOf(sc.nextLine()));
+					bookingDetailController.updateBookingDetail(bookingDetail);
+					System.out.println("예약 상세가 수정되었습니다.");
+					break;
+				case "2":
+					bookingController.deleteBooking(bookingDetail.getBookingId());
+					break;
+				case "3":
+					deleteBookingDetail(bookingDetailId, null);
+					break;
+				case "0":
+					break;
+				default:
+					printError("잘못된 선택입니다.");
+			}
+		} catch (Exception e) {
+			printError("오류 발생: " + e.getMessage());
+		}
+	}
+
+	private static void deleteBookingDetail(int bookingDetailId, Booking Booking) {
+		try {
+			bookingDetailController.deleteBookingDetail(bookingDetailId);
+			System.out.println("예약 상세가 삭제되었습니다.");
+		} catch (Exception e) {
+			printError("예약 상세 삭제 중 오류 발생: " + e.getMessage());
+		}
+		System.out.print("예약 번호를 입력해주세요: ");
+		int bookingId = Integer.parseInt(sc.nextLine());
+		try {
+			List<BookingDetail> bookingDetails = bookingDetailController.getBookingDetailById(bookingId);
+			Session session = UserController.getInstance().getSession();
+			int userId = session.getUserId();
+			if (bookingDetails == null || bookingDetailId != userId) {
+				printError("유효하지 않은 예약 번호입니다.");
+				return;
+			}
+			List<Room> room = roomController.getRoomById(Booking.getRoomId());
+			List<BookingDetail> details = bookingDetailController.getBookingDetailById(bookingDetails.get(0).getBookingDetailId());
+
+			System.out.println("--------------------------------");
+			System.out.println("예약 상세:");
+			System.out.println("---------------------------------------");
+			System.out.printf("| %-8s | %-15s |\n", "방 번호", room.get(0).getRoomNumber());
+			System.out.printf("| %-8s | %-15s |\n", "체크인", details.get(0).getCheckInDate());
+			System.out.printf("| %-8s | %-15s |\n", "체크아웃", details.get(0).getCheckOutDate());
+			System.out.printf("| %-8s | %-15d |\n", "인원수", details.get(0).getGuestCount());
+			System.out.printf("| %-8s | %,15d원 |\n", "총 가격", (int) details.get(0).getTotalPrice());
+			System.out.println("---------------------------------------");
+			System.out.println("1. 예약 수정 | 2. 예약 취소 | 3. 예약 상세 삭제 | 0. 나가기");
+			System.out.print("선택 > ");
+			String choice = sc.nextLine();
+
+			switch (choice) {
+				case "1":
+					bookingController.updateBooking(bookingId, Booking.getUserId(), Booking.getRoomId(), String.valueOf(Booking.getPaymentDate()));
+					break;
+				case "2":
+					bookingController.deleteBooking(bookingDetails.get(0).getBookingDetailId());
+					break;
+				case "3":
+					deleteBookingDetail(bookingDetails.get(0).getBookingDetailId(), Booking);
+>>>>>>> feat/book
 					break;
 				case "0":
 					break;
