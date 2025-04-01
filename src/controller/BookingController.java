@@ -44,4 +44,8 @@ public class BookingController {
     public void addBooking(Booking booking, List<BookingDetail> bookingDetails) throws SQLException, java.sql.SQLException {
         bookingDao.insert(booking, bookingDetails);
     }
+
+    public Booking getBookingByBookingDetailId(int bookingDetailId) {
+        return bookingDao.selectByNo(bookingDetailId);
+    }
 }
