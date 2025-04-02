@@ -1,5 +1,4 @@
 package controller;
-
 import java.sql.SQLException;
 
 import model.dto.User;
@@ -108,5 +107,4 @@ public class UserController {
 			FailView.errorMessage(e.getMessage());
 		}
 	}
-	
 }

@@ -1,5 +1,7 @@
 package controller;
 
+
+import model.dto.RoomRate;
 import java.sql.SQLException;
 import java.util.List;
 

@@ -1,5 +1,6 @@
 package controller;
 
+import model.dto.AttractionRate;
 import java.sql.SQLException;
 import java.util.List;
 

@@ -9,7 +9,7 @@ public class SuccessView {
 	public static void selectPrint(List<Room> list) {
 //		System.out.println();
 		for (Room room : list) {
-			System.out.println(room);
+//			System.out.println(room);
 		}
 	}
 	

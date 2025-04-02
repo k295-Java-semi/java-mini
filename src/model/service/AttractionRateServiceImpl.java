@@ -48,8 +48,4 @@ public class AttractionRateServiceImpl implements AttractionRateService {
         int result = attractionRateDao.deleteAttractionRate(attractionRateId);
         if (result == 0) throw new SQLException("관광지 평점 삭제에 실패하였습니다.");
     }
-
-
-
-	
 }

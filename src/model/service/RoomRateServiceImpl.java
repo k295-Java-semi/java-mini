@@ -42,6 +42,4 @@ public class RoomRateServiceImpl implements RoomRateService {
         int result = roomRateDao.deleteRoomRate(roomRateId);
         if (result == 0) throw new SQLException("방 평점 삭제에 실패하였습니다.");
     }
-
-	
 }

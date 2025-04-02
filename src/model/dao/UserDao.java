@@ -1,13 +1,14 @@
 package model.dao;
 
 
+import java.util.List;
+
 import model.dto.User;
 import pension.exception.DMLException;
 import pension.exception.NotFoundException;
 import session.Session;
 
 public interface UserDao {
-	
 	/**
 	 * 회원가입
 	 */

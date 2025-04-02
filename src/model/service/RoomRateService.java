@@ -1,9 +1,9 @@
 package model.service;
 
-import model.dto.RoomRate;
-
 import java.sql.SQLException;
 import java.util.List;
+
+import model.dto.RoomRate;
 
 public interface RoomRateService {
 	

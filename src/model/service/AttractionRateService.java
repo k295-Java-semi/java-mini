@@ -1,9 +1,9 @@
 package model.service;
 
-import model.dto.AttractionRate;
-
 import java.sql.SQLException;
 import java.util.List;
+
+import model.dto.AttractionRate;
 
 public interface AttractionRateService {
 	
@@ -12,7 +12,6 @@ public interface AttractionRateService {
 	
 	// 모든 관광지 평점 추가
 	List<AttractionRate> getAllAttractionRates() throws SQLException;
-	
     
 	// 관광지 아이디별 평점 조회
 	List<AttractionRate> getAttractionRatesByAttractionId(int attractionId) throws SQLException;

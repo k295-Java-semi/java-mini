@@ -35,6 +35,15 @@ public class DBManager {
 				proFile.getProperty("userPass"));
 	}
 	
+	public static void close(Connection con, PreparedStatement pstmt) {
+		try {
+			if(pstmt != null) pstmt.close();
+			if(con != null) con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static void close(Connection con, Statement st, ResultSet rs) {
 		try {

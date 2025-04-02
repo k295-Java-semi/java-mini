@@ -3,12 +3,12 @@ package model.service;
 import java.util.List;
 
 import model.dao.RoomDao;
+
 import model.dao.RoomDaoImpl;
 import model.dto.Room;
 import pension.exception.DMLException;
 import pension.exception.NotFoundException;
 import pension.exception.SearchWrongException;
-import session.Session;
 
 public class RoomServiceImpl implements RoomService {
 
@@ -36,8 +36,8 @@ public class RoomServiceImpl implements RoomService {
 	 * 특정 방 조회
 	 */
 	@Override
-	public Room getRoom(int roomId) throws SearchWrongException {
-		Room room = roomdao.roomSelectByNo(roomId);
+	public List<Room> getRoom(int roomId) throws SearchWrongException {
+		List<Room> room = roomdao.roomSelectByNo(roomId);
 		if (room == null) throw new SearchWrongException("검색 결과가 없습니다.");
 		
 		return room;

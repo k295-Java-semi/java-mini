@@ -1,16 +1,13 @@
 package model.service;
 
+import java.util.List;
 
 import model.dto.Room;
 import pension.exception.DMLException;
 import pension.exception.NotFoundException;
 import pension.exception.SearchWrongException;
-import session.Session;
-
-import java.util.List;
 
 public interface RoomService {
-	
 	/**
 	 * 모든 방 정보 조회
 	 */
@@ -19,7 +16,7 @@ public interface RoomService {
     /**
 	 * 특정 방 조회
 	 */
-	Room getRoom(int roomId) throws SearchWrongException;
+	List<Room> getRoom(int roomId) throws SearchWrongException;
 	
 	/**
 	 * 예약 가능한 방만 조회
