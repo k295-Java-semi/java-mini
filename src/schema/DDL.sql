@@ -24,6 +24,16 @@ CREATE TABLE `room` (
      `available` ENUM('Y', 'N') not NULL DEFAULT 'Y'
 );
 
+-- booking 테이블
+CREATE TABLE `booking` (
+    `booking_id` INT NOT NULL PRIMARY KEY auto_increment,
+    `user_id` INT NOT NULL,
+    `room_id` INT NOT NULL,
+    `payment_date` DATE NOT NULL DEFAULT (curdate()),
+    FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) on delete cascade,
+    FOREIGN KEY (`room_id`) REFERENCES `room` (`room_id`)
+);
+
 -- booking_detail 테이블
 CREATE TABLE `booking_detail` (
     `booking_detail_id` INT NOT NULL PRIMARY KEY auto_increment,
@@ -34,19 +44,8 @@ CREATE TABLE `booking_detail` (
     `check_out_date` DATE not NULL,
     `payment_date` DATE not NULL,
     `booking_id` INT NOT NULL,
-    foreign key(`booking_id`) references `booking`(`booking_id`)
+    foreign key(`booking_id`) references `booking`(`booking_id`) on delete cascade
 );
-
--- booking 테이블
-CREATE TABLE `booking` (
-    `booking_id` INT NOT NULL PRIMARY KEY auto_increment,
-    `user_id` INT NOT NULL,
-    `room_id` INT NOT NULL,
-    `payment_date` DATE NOT NULL DEFAULT (curdate()),
-    FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-    FOREIGN KEY (`room_id`) REFERENCES `room` (`room_id`)
-);
-
 
 -- room_rate 테이블
 CREATE TABLE `room_rate` (
@@ -105,6 +104,12 @@ INSERT INTO room (`room_number`, `type`, `price`, `capacity`, `size`, `descripti
 
 select * from room;
 
+-- booking 테이블 (3개 삽입) (user_id와 room_id는 위에 삽입된 데이터를 기반으로 설정)
+INSERT INTO booking (`user_id`, `room_id`, `payment_date`) VALUES
+(1, 1, CURDATE()),
+(2, 2, CURDATE()),
+(3, 3, CURDATE());
+
 -- booking_detail 테이블 (3개 삽입)
 INSERT INTO booking_detail (`guest_count`, `room_count`, `total_price`, `check_in_date`, `check_out_date`, `payment_date`, `booking_id`) VALUES
 (2, 1, 100000.00, '2024-04-01', '2024-04-03', now(), 1),
@@ -116,14 +121,6 @@ select * from booking where user_id = 1;
 select * from booking_detail where booking_id = (1);
 select * from booking_detail where booking_id = (4);
 select * from booking_detail where booking_id = (6);
-
--- booking 테이블 (3개 삽입) (user_id와 room_id는 위에 삽입된 데이터를 기반으로 설정)
-INSERT INTO booking (`user_id`, `room_id`, `payment_date`) VALUES
-(1, 1, CURDATE()),
-(2, 2, CURDATE()),
-(3, 3, CURDATE());
-
-
 
 select * from booking;
 -- state 테이블 (3개 삽입) (방이 예약됨을 표시)
@@ -160,8 +157,3 @@ INSERT INTO notice (`content`, `post_date`)
 VALUES ('지금 홍수가 났어요', curdate());
 
 select * from notice;
-
-
-
-
-
