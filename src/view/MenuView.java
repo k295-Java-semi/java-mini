@@ -309,7 +309,7 @@ public class MenuView {
 				for (int i = 0; i < roomCount; i++) {
 					BookingDetail bookingDetail = new BookingDetail();
 					bookingDetail.setGuestCount(guestCount);
-					bookingDetail.setRoomCount(1); // 예: 방 하나 예약
+					bookingDetail.setRoomCount(roomCount); // 예: 방 하나 예약
 					bookingDetail.setTotalPrice((int) selectedRoom.getPrice() * bookingDetail.getRoomCount());
 					bookingDetail.setPaymentDate(paymentDate);
 					bookingDetail.setCheckInDate(checkInDate);

@@ -115,7 +115,7 @@ public class RoomDaoImpl implements RoomDao{
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				room = new Room(
-		                rs.getInt(roomId),
+		                rs.getInt("room_Id"),
 		                rs.getString("room_number"),
 		                rs.getString("type"),
 		                rs.getInt("price"),             
